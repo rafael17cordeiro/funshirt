@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use App\Models\Customer;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -32,15 +33,29 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'gender' => ['required', 'in:M,F'], // <-- Nova regra: obrigatório e só aceita M ou F
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // DB Transaction: Cria o User e o Customer ou cancela ambos em caso de erro
+        $user = DB::transaction(function () use ($request) {
+
+            $newUser = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'user_type' => 'C',
+                'gender' => $request->gender, // <-- Guardar o género escolhido
+                'blocked' => 0, // <-- Garantir que o utilizador não está bloqueado
+            ]);
+
+            Customer::create([
+                'id' => $newUser->id,
+            ]);
+
+            return $newUser;
+        });
 
         event(new Registered($user));
 
