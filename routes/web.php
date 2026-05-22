@@ -2,11 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CatalogController;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/catalogo', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
