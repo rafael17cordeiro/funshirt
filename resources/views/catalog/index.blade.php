@@ -42,21 +42,30 @@
 
         <div class="border-b border-gray-200 mb-6">
             <div class="flex space-x-6 overflow-x-auto text-sm pb-4 thin-scrollbar">
-                <a href="#" class="font-bold border-b-2 border-black pb-2 whitespace-nowrap">Todas as Imagens</a>
+
+                <a href="{{ route('catalog.index') }}"
+                    class="whitespace-nowrap pb-2 {{ !request('category') ? 'font-bold border-b-2 border-black text-black' : 'text-gray-600 hover:text-black' }}">
+                    Todas as Imagens
+                </a>
+
                 @foreach ($categories as $category)
-                    <a href="#" class="text-gray-600 hover:text-black whitespace-nowrap pb-2">{{ $category->name }}</a>
+                    <a href="{{ route('catalog.index', ['category' => $category->id]) }}"
+                        class="whitespace-nowrap pb-2 {{ request('category') == $category->id ? 'font-bold border-b-2 border-black text-black' : 'text-gray-600 hover:text-black' }}">
+                        {{ $category->name }}
+                    </a>
                 @endforeach
+
             </div>
         </div>
     </div>
 
     <main class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 
             @foreach ($tshirts as $tshirt)
                 <div class="group cursor-pointer flex flex-col">
 
-                    <div class="relative bg-[#EBEDEE] aspect-[4/3] overflow-hidden">
+                    <div class="relative bg-[#EBEDEE] aspect-[3/5] overflow-hidden">
                         <img src="{{ asset('storage/tshirt_images/' . $tshirt->image_url) }}" alt="{{ $tshirt->name }}"
                             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
 
