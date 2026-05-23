@@ -63,7 +63,7 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 
             @foreach ($tshirts as $tshirt)
-                <div class="group cursor-pointer flex flex-col">
+                <a href="{{ route('catalog.show', $tshirt->id) }}" class="group cursor-pointer flex flex-col h-full">
 
                     <div class="relative bg-[#EBEDEE] aspect-[3/5] overflow-hidden">
                         <img src="{{ asset('storage/tshirt_images/' . $tshirt->image_url) }}" alt="{{ $tshirt->name }}"
@@ -100,7 +100,7 @@
                         </div>
                     </div>
 
-                </div>
+                </a>
             @endforeach
 
         </div>

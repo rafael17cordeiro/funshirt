@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,4 +20,6 @@ Route::middleware(['auth', 'role:C,A'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/catalogo/{id}', [CatalogController::class, 'show'])->name('catalog.show');
+Route::post('/carrinho/adicionar', [CartController::class, 'store'])->name('cart.store');
 require __DIR__ . '/auth.php';
