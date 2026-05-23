@@ -76,7 +76,7 @@ php artisan storage:link
 
 Para correr o projeto localmente é preciso de manter dois terminais abertos em simultâneo na pasta raiz do projeto (/funshirt):
 
-** Terminal 1 (Servidor PHP): **
+**Terminal 1 (Servidor PHP):**
 ```bash
 php artisan serve
 ```
