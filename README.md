@@ -108,5 +108,5 @@ git commit -m "feat: descrição clara do que foi feito"
 git push -u origin feature/nome-da-tua-tarefa
 ```
 
-5. Revisão e Pull Request (PR): Ir ao GitHub, abrir um Pull Request da branch para a main e avisar o grupo para rever. O código só é fundido (merge) com a main após aprovação.
+5. **Revisão e Pull Request (PR):** Ir ao GitHub, abrir um Pull Request da branch para a main e avisar o grupo para rever. O código só é fundido (merge) com a main após aprovação.
 
