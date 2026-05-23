@@ -63,10 +63,6 @@ New-Item database/database.sqlite
 
 
 **5. Migrações, Seeders e Storage:**
-```bash
-php artisan migrate --seed
-php artisan storage:link
-```
 Cria as tabelas, popula a base de dados com os dados de teste e cria o atalho para as imagens públicas:
 ```bash
 php artisan migrate --seed
