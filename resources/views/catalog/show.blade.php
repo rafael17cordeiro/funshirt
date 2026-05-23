@@ -4,9 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $tshirt->name }} | FunShirt</title>
+    <title>FunShirt</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 
 <body class="bg-white font-sans antialiased">
 
@@ -44,7 +51,7 @@
         </div>
 
         @if(session('success'))
-            <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 50); setTimeout(() => show = false, 4000)"
+            <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 50); setTimeout(() => show = false, 5000)"
                 x-show="show" x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0 transform translate-x-8"
                 x-transition:enter-end="opacity-100 transform translate-x-0"
@@ -63,7 +70,11 @@
 
                 <div class="flex-1">
                     <p class="text-sm font-black uppercase tracking-wider text-gray-950 mb-0.5">Adicionado</p>
-                    <p class="text-xs text-gray-600">{{ session('success') }}</p>
+                    <p class="text-xs text-gray-600 mb-2">{{ session('success') }}</p>
+                    <a href="{{ route('cart.index') }}"
+                        class="text-xs font-bold uppercase tracking-wider text-black underline underline-offset-4 hover:text-gray-600 transition">
+                        Ver Carrinho &rarr;
+                    </a>
                 </div>
 
                 <button @click="show = false" class="text-gray-400 hover:text-black transition flex-shrink-0 -mr-1 -mt-1">

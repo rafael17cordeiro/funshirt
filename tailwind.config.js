@@ -12,7 +12,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                // Aqui substituímos a fonte base do site (sans) pela Montserrat
+                sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
             },
         },
     },

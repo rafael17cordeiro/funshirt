@@ -50,4 +50,36 @@ class CartController extends Controller
         // 5. Devolve o cliente à página onde estava com uma mensagem de sucesso
         return back()->with('success', 'T-shirt adicionada ao carrinho com sucesso!');
     }
+
+    public function index()
+    {
+        // 1. Vai buscar o carrinho à sessão. Se não existir, devolve um array vazio.
+        $cart = session()->get('cart', []);
+
+        // 2. Calcula o valor total do carrinho
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['unit_price'] * $item['quantity'];
+        }
+
+        // 3. Envia os dados para a vista
+        return view('cart.index', compact('cart', 'total'));
+    }
+
+    public function destroy($key)
+    {
+        // 1. Vai buscar o carrinho atual
+        $cart = session()->get('cart', []);
+
+        // 2. Verifica se o produto existe lá dentro e remove-o
+        if (isset($cart[$key])) {
+            unset($cart[$key]);
+
+            // 3. Atualiza a sessão com o carrinho novo (agora sem aquele produto)
+            session()->put('cart', $cart);
+        }
+
+        // 4. Devolve o cliente à página com uma mensagem
+        return back()->with('success', 'Produto removido com sucesso.');
+    }
 }

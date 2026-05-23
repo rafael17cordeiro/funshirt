@@ -22,4 +22,6 @@ Route::middleware(['auth', 'role:C,A'])->group(function () {
 
 Route::get('/catalogo/{id}', [CatalogController::class, 'show'])->name('catalog.show');
 Route::post('/carrinho/adicionar', [CartController::class, 'store'])->name('cart.store');
+Route::get('/carrinho', [CartController::class, 'index'])->name('cart.index');
+Route::delete('/carrinho/{key}', [CartController::class, 'destroy'])->name('cart.destroy');
 require __DIR__ . '/auth.php';
