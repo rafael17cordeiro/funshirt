@@ -13,5 +13,50 @@ Para começares a trabalhar, abre o teu terminal e segue estes passos um a um:
 
 **1. Clonar o repositório para o teu computador:**
 ```bash
-git clone <COLOCA_AQUI_O_LINK_DO_VOSSO_GITHUB_PRIVADO>
-cd <NOME_DA_PASTA_DO_PROJETO> ´´´ 
+git clone https://github.com/rafael17cordeiro/funshirt
+cd funshirt 
+```
+
+**2. Instalar as dependências de PHP e Node.js:**
+```bash
+composer install
+npm install
+```
+
+**3. Configurar as variáveis de ambiente:**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+**4. Preparar a Base de Dados SQLite:**
+Cria o ficheiro da base de dados manualmente correndo:
+```bash
+Mac/Linux: touch database/database.sqlite
+Windows: New-Item database/database.sqlite
+```
+
+
+**5. Criar as tabelas, carregar os dados de teste e ativar as imagens:**
+```bash
+php artisan migrate --seed
+php artisan storage:link
+```
+
+
+
+
+
+## 💻 Como correr o projeto no dia a dia
+Vais precisar sempre de ter dois terminais abertos a correr em simultâneo na pasta do projeto:
+*** Terminal 1 (Servidor PHP): ***
+```bash
+php artisan serve
+```
+
+*** Terminal 2 (Compilador de CSS/JS): ***
+```bash
+npm run dev
+```
+
+
