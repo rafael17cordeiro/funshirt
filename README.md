@@ -97,7 +97,7 @@ Para evitar conflitos e garantir a qualidade do projeto, é necessario seguir ri
 git checkout main
 git pull
 ```
-3. Criar uma nova branch para a nova tarefa: Usar um nome descritivo para o que que se vai desenvolver.
+3. **Criar uma nova branch para a nova tarefa:** Usar um nome descritivo para o que que se vai desenvolver.
 ```bash
 git checkout -b feature/nome-da-tua-tarefa
 ```
