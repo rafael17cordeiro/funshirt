@@ -110,3 +110,63 @@ git push -u origin feature/nome-da-tua-tarefa
 
 5. **Revisão e Pull Request (PR):** Ir ao GitHub, abrir um Pull Request da branch para a main e avisar o grupo para rever. O código só é fundido (merge) com a main após aprovação.
 
+
+---
+
+## 📊 Ponto de Situação do Projeto
+
+Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisitos do enunciado que ainda precisam de ser desenvolvidos pela equipa.
+
+### ✅ O que já está implementado
+- [x] **Autenticação Base:** Sistema de Login e Registo configurado (Laravel Breeze).
+- [x] **Interface e Design:** UI minimalista, tipografia Montserrat aplicada e Navbar dinâmica e unificada em todas as páginas.
+- [x] **Catálogo (Lado Público):** Grelha de t-shirts, filtragem por categorias com barra de navegação horizontal (scroll invisível com setas de navegação) e pesquisa funcional.
+- [x] **Detalhe do Produto:** Visualização individual, escolha de cor, tamanho e quantidade com feedback visual instantâneo (Toast animado de sucesso).
+- [x] **Carrinho de Compras (Sessão):** Persistência dos dados na sessão do servidor, listagem de itens, cálculo automático de subtotais/totais, contador dinâmico na Navbar, remoção de itens com ícone de lixo e Toast de feedback.
+
+---
+
+### 🛠️ O que falta implementar (Grupos do Enunciado)
+
+#### G1. Autenticação, Perfil e Gestão de Utilizadores
+- [ ] Verificação/confirmação de e-mail obrigatória para novos clientes (via Mailtrap).
+- [ ] Recuperação de senha ("reset") com envio de link por e-mail (via Mailtrap).
+- [ ] **Área do Cliente:** Edição de dados pessoais e upload de fotografia/avatar.
+- [ ] **Backoffice do Admin:** CRUD completo para gestão de colaboradores (criar, bloquear ou remover funcionários e outros administradores).
+- [ ] **Backoffice do Admin:** Listagem, filtragem e bloqueio de clientes (usar *soft delete* obrigatoriamente se o cliente tiver histórico).
+
+#### G2. Catálogo (Gestão de Backoffice)
+- [ ] **Backoffice do Admin:** CRUD completo de Imagens de T-shirts do catálogo público (com upload de ficheiros).
+- [ ] **Backoffice do Admin:** CRUD completo de Categorias e Cores disponíveis para venda (com upload das respetivas t-shirts base).
+- [ ] **Backoffice do Admin:** Painel de configuração de preços da loja (preço catálogo, preço personalizada, descontos e limiar de quantidade na tabela `prices`).
+
+#### G3. Carrinho de Compras (Ajustes Finais)
+- [ ] Funcionalidade de alterar características (cor, tamanho e quantidade) diretamente na página do carrinho.
+- [ ] Botão de limpeza total do carrinho numa única operação.
+- [ ] Mecanismo para remover automaticamente o item caso a quantidade seja reduzida para zero (0).
+
+#### G4. Encomendas e Checkout
+- [ ] **Processo de Checkout:** Exclusivo para clientes autenticados (redirecionar anónimos mantendo o carrinho).
+- [ ] **Formulário de Checkout:** Campos de NIF (9 dígitos), endereço, método e referência de pagamento pré-preenchidos com os dados do perfil, mas editáveis.
+- [ ] **Integração de Pagamento:** Consumir a API externa simulada (`https://ainet-payments-api.vercel.app`) usando o *Laravel HTTP Client* para validar Visa, PayPal ou MB WAY.
+- [ ] **Registo na BD:** Gravação das tabelas `orders` e `order_items` replicando os preços exatos do momento da compra (imutabilidade do histórico).
+- [ ] **Histórico do Cliente:** Página para o cliente consultar as suas encomendas anteriores e detalhes.
+- [ ] **Logística dos Funcionários:** Tela para funcionários consultarem encomendas `pending` e transitá-las para `closed` pós-envio.
+- [ ] **Controlo do Admin:** Permissão para o Admin filtrar qualquer encomenda, alterá-la para `closed` ou `canceled` (com registo opcional do motivo de cancelamento).
+
+#### G5. Imagens Personalizadas
+- [ ] **Área Exclusiva do Cliente:** Espaço privado para o cliente fazer upload, consultar, atualizar e remover as suas próprias imagens (armazenadas em `storage/app/private/tshirt_images_private`).
+- [ ] Aplicar a lógica de preço diferenciado (`unit_price_own`) para t-shirts que utilizem estas imagens privadas.
+
+#### G6. Recibos e E-mails
+- [ ] **Geração de PDF:** Criar automaticamente o recibo em PDF estruturado (armazenado na pasta privada) assim que o estado passa para `closed`.
+- [ ] **Notificações por E-mail (Mailtrap):**
+  - [ ] Envio de e-mail ao criar encomenda (`pending`).
+  - [ ] Envio de e-mail ao anular encomenda (`canceled`).
+  - [ ] Envio de e-mail ao expedir encomenda (`closed`) com o recibo PDF em anexo.
+
+#### G7. Preview de T-shirts (Opcional/Extra)
+- [ ] Implementar a sobreposição visual (via CSS ou biblioteca PHP) da imagem da estampagem por cima da t-shirt base da cor selecionada no carrinho, detalhes ou PDF.
+
+#### G8. Estatísticas
+- [ ] **Painel do Admin:** Desenvolver um dashboard gráfico/métrico com os indicadores de desempenho do negócio (volume de vendas, médias temporais, produtos mais vendidos, etc.).
