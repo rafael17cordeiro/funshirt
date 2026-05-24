@@ -13,6 +13,12 @@
 
 
 ---
+
+![GitHub repo size](https://img.shields.io/github/repo-size/rafael17cordeiro/funshirt?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/rafael17cordeiro/funshirt?style=flat-square)
+![GitHub top language](https://img.shields.io/github/languages/top/rafael17cordeiro/funshirt?style=flat-square)
+
+
 <br><br>
 
 ## 📋 Pré-requisitos
