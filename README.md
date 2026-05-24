@@ -115,6 +115,7 @@ npm run dev
 
 ---
 
+<br><br>
 
 ## 🌿 Gestão de Git e Fluxo de Trabalho (Workflow)
 Para evitar conflitos e garantir a qualidade do projeto, é necessario seguir rigorosamente regras:
@@ -145,10 +146,10 @@ git checkout main
 git pull
 git branch -d feature/nome-da-tua-tarefa
 ```
-
+<br><br>
 
 ---
-
+<br><br>
 
 ## 📊 Ponto de Situação do Projeto
 
@@ -161,7 +162,7 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - [x] **Detalhe do Produto:** Visualização individual, escolha de cor, tamanho e quantidade com feedback visual instantâneo (Toast animado de sucesso).
 - [x] **Carrinho de Compras (Sessão):** Persistência dos dados na sessão do servidor, listagem de itens, cálculo automático de subtotais/totais, contador dinâmico na Navbar, remoção de itens com ícone de lixo e Toast de feedback.
 
-
+<br><br>
 ---
 
 
