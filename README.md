@@ -220,7 +220,9 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 <br><br>
 
 ### ⚖️​ Divisão de Tarefas
+
 <br>
+
 #### 🧑‍💻 Membro 1: Carrinho, Checkout e Faturação
 #### G3. Carrinho de Compras:
 - Alterar características (cor, tamanho, quantidade) no carrinho.
