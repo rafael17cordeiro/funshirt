@@ -17,7 +17,7 @@
 
 Antes de começarmos, verifica se tens as ferramentas necessárias instaladas no teu computador.
 
-🚀 **Recomendação para Windows e macOS:** Para evitar erros de configuração manuais, recomendamos a instalação do **[Laravel Herd](https://herd.laravel.com/)**. O Herd instala e configura automaticamente o PHP, o Composer e o Node.js num único clique.
+🚀 **Recomendação para Windows e macOS:** Para evitar erros de configuração manuais, é recomendado a instalação do **[Laravel Herd](https://herd.laravel.com/)**. O Herd instala e configura automaticamente o PHP, o Composer e o Node.js num único clique.
 
 Caso opte pela instalação manual (ou se usar **Linux**), garante que tem instalado:
 * [PHP](https://www.php.net/) (v8.2 ou superior)
