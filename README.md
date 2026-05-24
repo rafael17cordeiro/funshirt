@@ -213,3 +213,31 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - Gerar o recibo PDF.
 - Enviar os e-mails (via Mailtrap) na criação, anulação e expedição (com PDF).
 
+
+
+
+#### 🧑‍💻 Membro 2: Utilizadores, Logística e Estatísticas
+#### G1. Autenticação, Perfil e Utilizadores:
+- Verificação/confirmação de e-mail e recuperação de senha.
+- Área do Cliente (edição de dados e upload de avatar).
+- CRUD do Admin para gerir colaboradores.
+- Listagem e bloqueio de clientes (com *soft delete*).
+#### G4. Encomendas e Checkout (Lado do Staff):
+- Ecrã para Funcionários passarem encomendas de `pending` para `closed`.
+- Ecrã para Admins filtrarem e anularem (`canceled`) com motivo.
+#### G8. Estatísticas:
+-Dashboard do Admin com métricas e gráficos de desempenho do negócio.
+
+
+
+
+#### 🧑‍💻 Membro 3: O "Gestor de Produto" (Catálogo, Uploads e Efeitos Visuais)
+#### G2. Catálogo (Backoffice):
+- CRUD das Imagens do catálogo público.
+- CRUD de Categorias e Cores (com as t-shirts base).
+- Painel de configuração de preços (tabela `prices`).
+#### G5. Imagens Personalizadas::
+- Área privada do cliente para gerir (upload/atualizar/remover) as suas próprias estampagens (`storage/app/private...`).
+- Lógica de preço diferenciado (`unit_price_own`) ao usar estas imagens.
+#### G7. Preview de T-shirts:
+-Criar a sobreposição visual da estampa em cima da t-shirt base (no carrinho, detalhe e PDF)
