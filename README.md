@@ -163,8 +163,10 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - [x] **Carrinho de Compras (Sessão):** Persistência dos dados na sessão do servidor, listagem de itens, cálculo automático de subtotais/totais, contador dinâmico na Navbar, remoção de itens com ícone de lixo e Toast de feedback.
 
 <br><br>
+
 ---
 
+<br><br>
 
 ### 🛠️ O que falta implementar (Grupos do Enunciado)
 
@@ -211,11 +213,14 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 #### G8. Estatísticas
 - [ ] **Painel do Admin:** Desenvolver um dashboard gráfico/métrico com os indicadores de desempenho do negócio (volume de vendas, médias temporais, produtos mais vendidos, etc.).
 
+<br><br>
 
 ---
 
+<br><br>
 
-### 🛠️ Divisão de Tarefas
+### ⚖️​ Divisão de Tarefas
+<br>
 #### 🧑‍💻 Membro 1: Carrinho, Checkout e Faturação
 #### G3. Carrinho de Compras:
 - Alterar características (cor, tamanho, quantidade) no carrinho.
@@ -232,7 +237,7 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - Enviar os e-mails (via Mailtrap) na criação, anulação e expedição (com PDF).
 
 
-
+<br><br>
 
 #### 🧑‍💻 Membro 2: Utilizadores, Logística e Estatísticas
 #### G1. Autenticação, Perfil e Utilizadores:
@@ -246,7 +251,7 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 #### G8. Estatísticas:
 -Dashboard do Admin com métricas e gráficos de desempenho do negócio.
 
-
+<br><br>
 
 
 #### 🧑‍💻 Membro 3: O "Gestor de Produto" (Catálogo, Uploads e Efeitos Visuais)
