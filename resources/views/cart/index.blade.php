@@ -140,7 +140,7 @@
                     </div>
 
                     <a href="#"
-                        class="mt-8 w-full bg-black text-white font-bold uppercase tracking-wide py-4 flex justify-center hover:bg-gray-800 transition duration-300">
+                        class="rounded mt-8 w-full bg-black text-white font-bold uppercase tracking-wide py-4 flex justify-center hover:bg-gray-800 transition duration-300">
                         Finalizar Encomenda
                     </a>
 

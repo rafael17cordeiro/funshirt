@@ -143,7 +143,7 @@
                             <label for="size"
                                 class="block text-xs font-bold uppercase text-gray-700 mb-2">Tamanho</label>
                             <select id="size" name="size"
-                                class="w-full border-gray-300 rounded-none focus:ring-black focus:border-black text-sm uppercase"
+                                class="rounded w-full border-gray-300 focus:ring-black focus:border-black text-sm uppercase"
                                 required>
                                 <option value="" disabled selected>Selecionar</option>
                                 <option value="XS">XS</option>
@@ -158,7 +158,7 @@
                             <label for="color_code" class="block text-xs font-bold uppercase text-gray-700 mb-2">Cor da
                                 Base</label>
                             <select id="color_code" name="color_code"
-                                class="w-full border-gray-300 rounded-none focus:ring-black focus:border-black text-sm uppercase"
+                                class="w-full border-gray-300 rounded focus:ring-black focus:border-black text-sm uppercase"
                                 required>
                                 <option value="" disabled selected>Selecionar</option>
                                 @foreach($colors as $color)
@@ -172,12 +172,12 @@
                         <label for="quantity"
                             class="block text-xs font-bold uppercase text-gray-700 mb-2">Quantidade</label>
                         <input type="number" id="quantity" name="quantity" value="1" min="1" max="50"
-                            class="w-24 border-gray-300 rounded-none focus:ring-black focus:border-black text-center"
+                            class="w-24 border-gray-300 rounded focus:ring-black focus:border-black text-center"
                             required>
                     </div>
 
                     <button type="submit"
-                        class="w-full bg-black text-white font-bold uppercase tracking-wide py-4 mt-4 hover:bg-gray-800 transition duration-300 flex justify-center items-center space-x-3">
+                        class="rounded w-full bg-black text-white font-bold uppercase tracking-wide py-4 mt-4 hover:bg-gray-800 transition duration-300 flex justify-center items-center space-x-3">
                         <span>Adicionar ao Carrinho</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                             stroke="currentColor" class="w-5 h-5">
