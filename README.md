@@ -15,8 +15,12 @@
 
 ## 📋 Pré-requisitos
 
-Antes de começarmos, verificar se temos as seguintes ferramentas instaladas no teu computador:
-* [PHP](https://www.php.net/) (v8.2 ou superior)
+Antes de começarmos, verifica se tens as ferramentas necessárias instaladas no teu computador.
+
+🚀 **Recomendação para Windows e macOS:** Para evitar erros de configuração manuais (como extensões em falta no `php.ini`), recomendamos vivamente a instalação do **[Laravel Herd](https://herd.laravel.com/)**. O Herd instala e configura automaticamente o PHP, o Composer e o Node.js num único clique.
+
+Caso optes pela instalação manual (ou se usares **Linux**), garante que tens instalado:
+* [PHP](https://www.php.net/) (v8.2 ou superior) -> *Nota: Se instalares manualmente, lembra-te de ativar as extensões `fileinfo`, `zip` e `pdo_sqlite` no teu ficheiro `php.ini`.*
 * [Composer](https://getcomposer.org/)
 * [Node.js e npm](https://nodejs.org/)
 * [Git](https://git-scm.com/)
