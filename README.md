@@ -11,7 +11,9 @@
   Uma loja online de t-shirts estampadas desenvolvida em Laravel 12+ com Tailwind CSS e Alpine.js.
 </p>
 <br>
+
 ---
+
 <br>
 ## 📋 Pré-requisitos
 
@@ -25,7 +27,9 @@ Caso opte pela instalação manual (ou se usar **Linux**), garante que tem insta
 * [Node.js e npm](https://nodejs.org/)
 * [Git](https://git-scm.com/)
 <br>
+
 ---
+
 <br>
 ## 🚀 Instalação do Projeto
 
@@ -86,7 +90,9 @@ php artisan migrate --seed
 php artisan storage:link
 ```
 <br>
+
 ---
+
 <br>
 ## 💻 Executar o Projeto no dia a dia
 
@@ -102,7 +108,9 @@ php artisan serve
 npm run dev
 ```
 <br>
+
 ---
+
 <br>
 ## 🌿 Gestão de Git e Fluxo de Trabalho (Workflow)
 Para evitar conflitos e garantir a qualidade do projeto, é necessario seguir rigorosamente regras:
@@ -134,7 +142,9 @@ git pull
 git branch -d feature/nome-da-tua-tarefa
 ```
 <br>
+
 ---
+
 <br>
 ## 📊 Ponto de Situação do Projeto
 
@@ -147,7 +157,9 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - [x] **Detalhe do Produto:** Visualização individual, escolha de cor, tamanho e quantidade com feedback visual instantâneo (Toast animado de sucesso).
 - [x] **Carrinho de Compras (Sessão):** Persistência dos dados na sessão do servidor, listagem de itens, cálculo automático de subtotais/totais, contador dinâmico na Navbar, remoção de itens com ícone de lixo e Toast de feedback.
 <br>
+
 ---
+
 <br>
 ### 🛠️ O que falta implementar (Grupos do Enunciado)
 
@@ -195,7 +207,9 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - [ ] **Painel do Admin:** Desenvolver um dashboard gráfico/métrico com os indicadores de desempenho do negócio (volume de vendas, médias temporais, produtos mais vendidos, etc.).
 
 <br>
+
 ---
+
 <br>
 ### 🛠️ Divisão de Tarefas
 #### 🧑‍💻 Membro 1: Carrinho, Checkout e Faturação
