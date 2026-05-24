@@ -219,7 +219,7 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 
 <br><br>
 
-### ⚖️​ Divisão de Tarefas
+## ⚖️​ Divisão de Tarefas
 
 <br>
 
