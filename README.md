@@ -24,8 +24,6 @@
   <br>
   <img src="https://komarev.com/ghpvc/?username=rafael17cordeiro-funshirt&label=Profile%20Views&color=blue&style=flat-square" alt="Views">
 
-  <br><br>
-
   <!-- NOVOS BADGES -->
 
   <!-- Stars -->
@@ -39,9 +37,6 @@
 
   <!-- Pull Requests -->
   <img src="https://img.shields.io/github/issues-pr/rafael17cordeiro/funshirt?style=flat-square" alt="Pull Requests">
-
-  <!-- License -->
-  <img src="https://img.shields.io/github/license/rafael17cordeiro/funshirt?style=flat-square" alt="License">
 
   <!-- Language count -->
   <img src="https://img.shields.io/github/languages/count/rafael17cordeiro/funshirt?style=flat-square" alt="Languages Count">
