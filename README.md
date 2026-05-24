@@ -17,10 +17,10 @@
 
 Antes de começarmos, verifica se tens as ferramentas necessárias instaladas no teu computador.
 
-🚀 **Recomendação para Windows e macOS:** Para evitar erros de configuração manuais (como extensões em falta no `php.ini`), recomendamos vivamente a instalação do **[Laravel Herd](https://herd.laravel.com/)**. O Herd instala e configura automaticamente o PHP, o Composer e o Node.js num único clique.
+🚀 **Recomendação para Windows e macOS:** Para evitar erros de configuração manuais, recomendamos a instalação do **[Laravel Herd](https://herd.laravel.com/)**. O Herd instala e configura automaticamente o PHP, o Composer e o Node.js num único clique.
 
-Caso optes pela instalação manual (ou se usares **Linux**), garante que tens instalado:
-* [PHP](https://www.php.net/) (v8.2 ou superior) -> *Nota: Se instalares manualmente, lembra-te de ativar as extensões `fileinfo`, `zip` e `pdo_sqlite` no teu ficheiro `php.ini`.*
+Caso opte pela instalação manual (ou se usar **Linux**), garante que tem instalado:
+* [PHP](https://www.php.net/) (v8.2 ou superior)
 * [Composer](https://getcomposer.org/)
 * [Node.js e npm](https://nodejs.org/)
 * [Git](https://git-scm.com/)
@@ -48,8 +48,16 @@ npm install
 
 **3. Configurar variáveis de ambiente:**
 Criar o ficheiro .env a partir do exemplo e gerar a chave de encriptação do Laravel:
+
+* Linux / Mac / Git Bash / PowerShell:
 ```bash
 cp .env.example .env
+php artisan key:generate
+```
+
+* Windows (CMD Tradicional):
+```bash
+copy .env.example .env
 php artisan key:generate
 ```
 
@@ -57,13 +65,17 @@ php artisan key:generate
 **4. Preparar a Base de Dados (SQLite):**
 Criar o ficheiro vazio para a base de dados. Escolher o comando adequado ao sistema operativo:
 
-* Mac / Linux:
+* Mac / Linux / Git Bash:
 ```bash
 touch database/database.sqlite
 ```
 * Windows (PowerShell):
 ```bash
 New-Item database/database.sqlite
+```
+* Windows (CMD):
+```bash
+type nul > database\database.sqlite
 ```
 
 
