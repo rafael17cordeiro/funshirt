@@ -14,10 +14,14 @@
 
 ---
 
-![GitHub repo size](https://img.shields.io/github/repo-size/rafael17cordeiro/funshirt?style=flat-square)
-![GitHub last commit](https://img.shields.io/github/last-commit/rafael17cordeiro/funshirt?style=flat-square)
-![GitHub top language](https://img.shields.io/github/languages/top/rafael17cordeiro/funshirt?style=flat-square)
-
+<div align="center">
+  <img src="https://img.shields.io/github/repo-size/rafael17cordeiro/funshirt?style=flat-square" alt="Repo Size">
+  <img src="https://img.shields.io/github/last-commit/rafael17cordeiro/funshirt?style=flat-square" alt="Last Commit">
+  <img src="https://img.shields.io/github/languages/top/rafael17cordeiro/funshirt?style=flat-square" alt="Top Language">
+  <img src="https://img.shields.io/badge/Status-In_Development-yellow?style=flat-square" alt="Status">
+  <br>
+  <img src="https://komarev.com/ghpvc/?username=rafael17cordeiro-funshirt&label=Profile%20Views&color=blue&style=flat-square" alt="Views">
+</div>
 <br><br>
 
 ## 📋 Pré-requisitos
