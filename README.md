@@ -15,7 +15,6 @@
 
 ---
 
-<br><br><br>
 ## 📋 Pré-requisitos
 
 Antes de começarmos, verifica se tens as ferramentas necessárias instaladas no teu computador.
@@ -28,6 +27,7 @@ Caso opte pela instalação manual (ou se usar **Linux**), garante que tem insta
 * [Node.js e npm](https://nodejs.org/)
 * [Git](https://git-scm.com/)
 
+<br><br><br>
 
 ---
 
