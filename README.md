@@ -10,12 +10,12 @@
   <strong>Projeto de Aplicações para a Internet (2025/2026) - Engenharia Informática</strong><br>
   Uma loja online de t-shirts estampadas desenvolvida em Laravel 12+ com Tailwind CSS e Alpine.js.
 </p>
-<br>
-<br>
+
+<br><br><br>
 
 ---
 
-
+<br><br><br>
 ## 📋 Pré-requisitos
 
 Antes de começarmos, verifica se tens as ferramentas necessárias instaladas no teu computador.
