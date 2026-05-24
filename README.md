@@ -13,6 +13,7 @@
 
 
 ---
+<br><br>
 
 ## 📋 Pré-requisitos
 
@@ -26,7 +27,7 @@ Caso opte pela instalação manual (ou se usar **Linux**), garante que tem insta
 * [Node.js e npm](https://nodejs.org/)
 * [Git](https://git-scm.com/)
 
-<br><br><br>
+<br><br>
 
 ---
 
