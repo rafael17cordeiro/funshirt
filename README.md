@@ -260,7 +260,7 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - Ecrã para Funcionários passarem encomendas de `pending` para `closed`.
 - Ecrã para Admins filtrarem e anularem (`canceled`) com motivo.
 #### G8. Estatísticas:
--Dashboard do Admin com métricas e gráficos de desempenho do negócio.
+- Dashboard do Admin com métricas e gráficos de desempenho do negócio.
 
 <br><br>
 
@@ -274,4 +274,5 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - Área privada do cliente para gerir (upload/atualizar/remover) as suas próprias estampagens (`storage/app/private...`).
 - Lógica de preço diferenciado (`unit_price_own`) ao usar estas imagens.
 #### G7. Preview de T-shirts:
--Criar a sobreposição visual da estampa em cima da t-shirt base (no carrinho, detalhe e PDF)
+- Criar a sobreposição visual da estampa em cima da t-shirt base (no carrinho, detalhe e PDF)
+
