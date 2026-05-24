@@ -199,3 +199,17 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 
 ### 🛠️ Divisão de Tarefas
 #### 🧑‍💻 Membro 1: Carrinho, Checkout e Faturação
+#### G3. Carrinho de Compras:
+- Alterar características (cor, tamanho, quantidade) no carrinho.
+- Limpeza total do carrinho.
+- Remover item automaticamente se a quantidade for 0.
+#### G4. Encomendas e Checkout (Lado do Cliente):
+- Proteger o checkout (só para autenticados).
+- Formulário com dados pré-preenchidos e editáveis.
+- Integração da API de Pagamentos (Visa, PayPal, MB WAY).
+- Gravação na BD (`orders` e `order_items`) congelando os preços.
+- Página do Histórico de Encomendas do Cliente.
+#### G6. Recibos e E-mails (Ligado ao Checkout):
+- Gerar o recibo PDF.
+- Enviar os e-mails (via Mailtrap) na criação, anulação e expedição (com PDF).
+
