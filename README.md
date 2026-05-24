@@ -15,12 +15,40 @@
 ---
 
 <div align="center">
+
+  <!-- EXISTENTES -->
   <img src="https://img.shields.io/github/repo-size/rafael17cordeiro/funshirt?style=flat-square" alt="Repo Size">
   <img src="https://img.shields.io/github/last-commit/rafael17cordeiro/funshirt?style=flat-square" alt="Last Commit">
   <img src="https://img.shields.io/github/languages/top/rafael17cordeiro/funshirt?style=flat-square" alt="Top Language">
   <img src="https://img.shields.io/badge/Status-In_Development-yellow?style=flat-square" alt="Status">
   <br>
   <img src="https://komarev.com/ghpvc/?username=rafael17cordeiro-funshirt&label=Profile%20Views&color=blue&style=flat-square" alt="Views">
+
+  <br><br>
+
+  <!-- NOVOS BADGES -->
+
+  <!-- Stars -->
+  <img src="https://img.shields.io/github/stars/rafael17cordeiro/funshirt?style=flat-square" alt="GitHub Stars">
+
+  <!-- Forks -->
+  <img src="https://img.shields.io/github/forks/rafael17cordeiro/funshirt?style=flat-square" alt="GitHub Forks">
+
+  <!-- Issues -->
+  <img src="https://img.shields.io/github/issues/rafael17cordeiro/funshirt?style=flat-square" alt="Issues">
+
+  <!-- Pull Requests -->
+  <img src="https://img.shields.io/github/issues-pr/rafael17cordeiro/funshirt?style=flat-square" alt="Pull Requests">
+
+  <!-- License -->
+  <img src="https://img.shields.io/github/license/rafael17cordeiro/funshirt?style=flat-square" alt="License">
+
+  <!-- Language count -->
+  <img src="https://img.shields.io/github/languages/count/rafael17cordeiro/funshirt?style=flat-square" alt="Languages Count">
+
+  <!-- Open issues badge (alternative style) -->
+  <img src="https://img.shields.io/github/issues-closed/rafael17cordeiro/funshirt?style=flat-square" alt="Closed Issues">
+
 </div>
 <br><br>
 
