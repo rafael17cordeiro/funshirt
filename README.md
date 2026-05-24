@@ -11,7 +11,6 @@
   Uma loja online de t-shirts estampadas desenvolvida em Laravel 12+ com Tailwind CSS e Alpine.js.
 </p>
 
-<br><br><br>
 
 ---
 <br><br><br>
