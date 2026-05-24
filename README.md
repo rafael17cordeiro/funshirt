@@ -93,8 +93,10 @@ php artisan storage:link
 ```
 
 <br><br>
+
 ---
 
+<br><br>
 
 ## 💻 Executar o Projeto no dia a dia
 
