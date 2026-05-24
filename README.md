@@ -184,12 +184,18 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 #### G6. Recibos e E-mails
 - [ ] **Geração de PDF:** Criar automaticamente o recibo em PDF estruturado (armazenado na pasta privada) assim que o estado passa para `closed`.
 - [ ] **Notificações por E-mail (Mailtrap):**
-  - [ ] Envio de e-mail ao criar encomenda (`pending`).
-  - [ ] Envio de e-mail ao anular encomenda (`canceled`).
-  - [ ] Envio de e-mail ao expedir encomenda (`closed`) com o recibo PDF em anexo.
+- [ ] Envio de e-mail ao criar encomenda (`pending`).
+- [ ] Envio de e-mail ao anular encomenda (`canceled`).
+- [ ] Envio de e-mail ao expedir encomenda (`closed`) com o recibo PDF em anexo.
 
 #### G7. Preview de T-shirts (Opcional/Extra)
 - [ ] Implementar a sobreposição visual (via CSS ou biblioteca PHP) da imagem da estampagem por cima da t-shirt base da cor selecionada no carrinho, detalhes ou PDF.
 
 #### G8. Estatísticas
 - [ ] **Painel do Admin:** Desenvolver um dashboard gráfico/métrico com os indicadores de desempenho do negócio (volume de vendas, médias temporais, produtos mais vendidos, etc.).
+
+
+---
+
+### 🛠️ Divisão de Tarefas
+#### 🧑‍💻 Membro 1: Carrinho, Checkout e Faturação
