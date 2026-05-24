@@ -10,9 +10,9 @@
   <strong>Projeto de Aplicações para a Internet (2025/2026) - Engenharia Informática</strong><br>
   Uma loja online de t-shirts estampadas desenvolvida em Laravel 12+ com Tailwind CSS e Alpine.js.
 </p>
-
+<br>
 ---
-
+<br>
 ## 📋 Pré-requisitos
 
 Antes de começarmos, verifica se tens as ferramentas necessárias instaladas no teu computador.
@@ -24,9 +24,9 @@ Caso opte pela instalação manual (ou se usar **Linux**), garante que tem insta
 * [Composer](https://getcomposer.org/)
 * [Node.js e npm](https://nodejs.org/)
 * [Git](https://git-scm.com/)
-
+<br>
 ---
-
+<br>
 ## 🚀 Instalação do Projeto
 
 Seguir os passos abaixo para configurar o ambiente de desenvolvimento na tua máquina local.
@@ -85,9 +85,9 @@ Criar as tabelas, popula a base de dados com os dados de teste e criar o atalho 
 php artisan migrate --seed
 php artisan storage:link
 ```
-
+<br>
 ---
-
+<br>
 ## 💻 Executar o Projeto no dia a dia
 
 Para correr o projeto localmente é preciso de manter dois terminais abertos em simultâneo na pasta raiz do projeto (/funshirt):
@@ -101,9 +101,9 @@ php artisan serve
 ```bash
 npm run dev
 ```
-
+<br>
 ---
-
+<br>
 ## 🌿 Gestão de Git e Fluxo de Trabalho (Workflow)
 Para evitar conflitos e garantir a qualidade do projeto, é necessario seguir rigorosamente regras:
 
@@ -133,9 +133,9 @@ git checkout main
 git pull
 git branch -d feature/nome-da-tua-tarefa
 ```
-
+<br>
 ---
-
+<br>
 ## 📊 Ponto de Situação do Projeto
 
 Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisitos do enunciado que ainda precisam de ser desenvolvidos pela equipa.
@@ -146,9 +146,9 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - [x] **Catálogo (Lado Público):** Grelha de t-shirts, filtragem por categorias com barra de navegação horizontal (scroll invisível com setas de navegação) e pesquisa funcional.
 - [x] **Detalhe do Produto:** Visualização individual, escolha de cor, tamanho e quantidade com feedback visual instantâneo (Toast animado de sucesso).
 - [x] **Carrinho de Compras (Sessão):** Persistência dos dados na sessão do servidor, listagem de itens, cálculo automático de subtotais/totais, contador dinâmico na Navbar, remoção de itens com ícone de lixo e Toast de feedback.
-
+<br>
 ---
-
+<br>
 ### 🛠️ O que falta implementar (Grupos do Enunciado)
 
 #### G1. Autenticação, Perfil e Gestão de Utilizadores
@@ -194,9 +194,9 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 #### G8. Estatísticas
 - [ ] **Painel do Admin:** Desenvolver um dashboard gráfico/métrico com os indicadores de desempenho do negócio (volume de vendas, médias temporais, produtos mais vendidos, etc.).
 
-
+<br>
 ---
-
+<br>
 ### 🛠️ Divisão de Tarefas
 #### 🧑‍💻 Membro 1: Carrinho, Checkout e Faturação
 #### G3. Carrinho de Compras:
@@ -213,7 +213,7 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - Gerar o recibo PDF.
 - Enviar os e-mails (via Mailtrap) na criação, anulação e expedição (com PDF).
 
-
+<br>
 
 
 #### 🧑‍💻 Membro 2: Utilizadores, Logística e Estatísticas
@@ -228,7 +228,7 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 #### G8. Estatísticas:
 -Dashboard do Admin com métricas e gráficos de desempenho do negócio.
 
-
+<br>
 
 
 #### 🧑‍💻 Membro 3: O "Gestor de Produto" (Catálogo, Uploads e Efeitos Visuais)
