@@ -31,6 +31,7 @@ Caso opte pela instalação manual (ou se usar **Linux**), garante que tem insta
 
 ---
 
+<br><br>
 
 ## 🚀 Instalação do Projeto
 
@@ -91,7 +92,7 @@ php artisan migrate --seed
 php artisan storage:link
 ```
 
-
+<br><br>
 ---
 
 
