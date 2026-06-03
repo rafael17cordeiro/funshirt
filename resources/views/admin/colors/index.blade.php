@@ -33,7 +33,7 @@
                 @forelse($colors as $color)
                     <tr class="hover:bg-zinc-50/50 transition">
                         <td class="py-4 px-6">
-                            <div class="w-8 h-8 rounded-full border border-zinc-200 shadow-sm" style="background-color: {{ $color->code }}"></div>
+                            <div class="w-8 h-8 rounded-full border border-zinc-200 shadow-sm" style="background-color: #{{ $color->code }}"></div>
                         </td>
                         <td class="py-4 px-6 font-mono text-xs text-zinc-500">
                             {{ $color->code }}

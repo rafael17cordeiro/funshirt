@@ -12,14 +12,17 @@
         @method('PUT')
 
         <div>
-            <label class="block text-xs uppercase tracking-widest text-zinc-500 font-medium mb-2">Código da Cor (Não Editável) </label>
+            <label class="block text-xs uppercase tracking-widest text-zinc-500 font-medium mb-2">Código da Cor (Não Editável)</label>
             <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-full border border-zinc-200 shadow-sm" style="background-color: {{ $color->code }}"></div>
+                <div class="w-8 h-8 rounded-full border-2 border-zinc-300 shadow-sm" 
+                     style="background-color: #{{ $color->code }};">
+                </div>
                 <input type="text" 
                        value="{{ $color->code }}"
                        class="w-full border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm font-mono text-zinc-500 rounded-sm cursor-not-allowed"
                        readonly>
             </div>
+            <p class="text-xxs text-zinc-400 mt-1">Nota: Se a amostra estiver branca, verifique se o código gravado na base de dados é um valor CSS válido (ex: #FFFFFF ou 'black').</p>
         </div>
 
         <div>
