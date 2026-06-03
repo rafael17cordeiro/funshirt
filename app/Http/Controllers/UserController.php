@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'user_type' => ['required', 'in:A,F'],
             'gender' => ['required', 'in:M,F,O'], // ADICIONADO: Validação do género
@@ -56,9 +56,10 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
-public function update(Request $request, User $user)
+    public function update(Request $request, User $user)
     {
-        if ($user->user_type === 'C') abort(403);
+        if ($user->user_type === 'C')
+            abort(403);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -74,7 +75,8 @@ public function update(Request $request, User $user)
 
     public function destroy(User $user)
     {
-        if ($user->user_type === 'C') abort(403);
+        if ($user->user_type === 'C')
+            abort(403);
 
         // Trava de segurança: Impede o administrador de apagar a própria conta
         if (auth()->id() === $user->id) {
@@ -92,13 +94,16 @@ public function update(Request $request, User $user)
 
     public function clientsIndex()
     {
-        // Lista apenas Clientes ('C')
-        $clients = User::where('user_type', 'C')->get();
+        // withTrashed() garante que os clientes apagados (soft delete) também aparecem na lista
+        $clients = User::withTrashed()->where('user_type', 'C')->get();
         return view('admin.clients.index', compact('clients'));
     }
 
-    public function toggleBlock(User $user)
+    public function toggleBlock($id)
     {
+        // Encontra o utilizador pelo ID, mesmo que esteja apagado (trashed)
+        $user = User::withTrashed()->findOrFail($id);
+
         if ($user->user_type !== 'C') {
             abort(403, 'Apenas podes bloquear/desbloquear clientes.');
         }
@@ -110,5 +115,23 @@ public function update(Request $request, User $user)
         $status = $user->blocked ? 'bloqueado' : 'desbloqueado';
 
         return back()->with('success', "O cliente foi {$status} com sucesso!");
+    }
+
+    public function destroyClient($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+
+        if ($user->user_type !== 'C') {
+            abort(403, 'Apenas podes apagar clientes aqui.');
+        }
+
+        // Se já estiver apagado, restaura. Se não estiver, apaga (soft delete).
+        if ($user->trashed()) {
+            $user->restore();
+            return back()->with('success', 'Conta de cliente restaurada com sucesso!');
+        } else {
+            $user->delete();
+            return back()->with('success', 'Conta de cliente apagada (Soft Delete) com sucesso!');
+        }
     }
 }
