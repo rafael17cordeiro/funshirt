@@ -51,6 +51,11 @@
                     <span class="text-gray-200">|</span>
 
                     @auth
+                        @if(Auth::user()->user_type === 'A')
+                            <a href="{{ route('admin.categories.index') }}" class="text-xs uppercase tracking-widest text-zinc-500 hover:text-zinc-950 font-medium transition">
+                                Gestão (Admin)
+                            </a>
+                        @endif
                         <a href="{{ route('dashboard') }}" class="hover:underline underline-offset-4">A Minha Conta</a>
                     @else
                         <div class="flex items-center space-x-3">
