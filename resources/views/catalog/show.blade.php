@@ -1,72 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt">
+@extends('layouts.store')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FunShirt</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap"
-        rel="stylesheet">
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-
-<body class="bg-white font-sans antialiased">
-
-    <nav class="bg-white border-b border-gray-200">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('catalog.index') }}" class="text-2xl font-black tracking-tighter">
-                        FUNSHIRT
-                    </a>
-                </div>
-
-                <div class="flex items-center space-x-6 text-sm font-medium">
-                    <a href="{{ route('cart.index') }}" class="relative text-gray-700 hover:text-black transition p-1"
-                        title="Ver Carrinho">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                        </svg>
-
-                        @php
-                            // Somar todas as quantidades de itens no carrinho da sessão
-                            $cartCount = 0;
-                            foreach (session('cart', []) as $item) {
-                                $cartCount += $item['quantity'];
-                            }
-                        @endphp
-
-                        @if($cartCount > 0)
-                            <span
-                                class="absolute -top-1 -right-1 bg-black text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center animate-pulse">
-                                {{ $cartCount }}
-                            </span>
-                        @endif
-                    </a>
-
-                    <span class="text-gray-200">|</span>
-
-                    @auth
-                        <a href="{{ route('dashboard') }}" class="hover:underline underline-offset-4">A Minha Conta</a>
-                    @else
-                        <div class="flex items-center space-x-3">
-                            <a href="{{ route('login') }}" class="hover:underline underline-offset-4">Entrar</a>
-                            <span class="text-gray-300 font-light">|</span>
-                            <a href="{{ route('register') }}" class="hover:underline underline-offset-4">Criar Conta</a>
-                        </div>
-                    @endauth
-                </div>
-            </div>
-        </div>
-    </nav>
-
+@section('content')
     <main class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         <div class="text-xs uppercase tracking-widest text-gray-500 mb-8">
@@ -84,7 +18,7 @@
                 x-transition:leave="transition ease-in duration-200"
                 x-transition:leave-start="opacity-100 transform translate-x-0"
                 x-transition:leave-end="opacity-0 transform translate-x-8"
-                class="fixed bottom-6 right-6 bg-white p-4 shadow-xl  border border-gray-100 border-l-4 border-l-green-500 flex items-start space-x-4 z-50 w-full max-w-sm">
+                class="fixed bottom-6 right-6 bg-white p-4 shadow-xl border border-gray-100 border-l-4 border-l-green-500 flex items-start space-x-4 z-50 w-full max-w-sm">
 
                 <div class="flex-shrink-0 pt-0.5">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
@@ -140,8 +74,7 @@
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label for="size"
-                                class="block text-xs font-bold uppercase text-gray-700 mb-2">Tamanho</label>
+                            <label for="size" class="block text-xs font-bold uppercase text-gray-700 mb-2">Tamanho</label>
                             <select id="size" name="size"
                                 class="rounded w-full border-gray-300 focus:ring-black focus:border-black text-sm uppercase"
                                 required>
@@ -155,8 +88,7 @@
                         </div>
 
                         <div>
-                            <label for="color_code" class="block text-xs font-bold uppercase text-gray-700 mb-2">Cor da
-                                Base</label>
+                            <label for="color_code" class="block text-xs font-bold uppercase text-gray-700 mb-2">Cor da Base</label>
                             <select id="color_code" name="color_code"
                                 class="w-full border-gray-300 rounded focus:ring-black focus:border-black text-sm uppercase"
                                 required>
@@ -169,8 +101,7 @@
                     </div>
 
                     <div>
-                        <label for="quantity"
-                            class="block text-xs font-bold uppercase text-gray-700 mb-2">Quantidade</label>
+                        <label for="quantity" class="block text-xs font-bold uppercase text-gray-700 mb-2">Quantidade</label>
                         <input type="number" id="quantity" name="quantity" value="1" min="1" max="50"
                             class="w-24 border-gray-300 rounded focus:ring-black focus:border-black text-center"
                             required>
@@ -190,7 +121,4 @@
             </div>
         </div>
     </main>
-
-</body>
-
-</html>
+@endsection
