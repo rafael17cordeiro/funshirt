@@ -53,7 +53,19 @@
                     @auth
                         @if(Auth::user()->user_type === 'A')
                             <a href="{{ route('admin.categories.index') }}" class="text-xs uppercase tracking-widest text-zinc-500 hover:text-zinc-950 font-medium transition">
-                                Gestão (Admin)
+                                Categorias
+                            </a>
+                            <span class="text-gray-300 font-light">|</span>
+                            <a href="{{ route('admin.colors.index') }}" class="text-xs uppercase tracking-widest text-zinc-500 hover:text-zinc-950 font-medium transition">
+                                Cores
+                            </a>
+                            <span class="text-gray-300 font-light">|</span>
+                            <a href="{{ route('admin.tshirt_images.index') }}" class="text-xs uppercase tracking-widest text-zinc-500 hover:text-zinc-950 font-medium transition">
+                                Estampas
+                            </a>
+                            <span class="text-gray-300 font-light">|</span>
+                            <a href="{{ route('admin.prices.index') }}" class="text-xs uppercase tracking-widest text-zinc-500 hover:text-zinc-950 font-medium transition">
+                                Preços
                             </a>
                         @endif
                         <a href="{{ route('dashboard') }}" class="hover:underline underline-offset-4">A Minha Conta</a>

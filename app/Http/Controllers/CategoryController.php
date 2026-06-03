@@ -40,11 +40,11 @@ class CategoryController extends Controller
         $category = new Category();
         $category->name = $validated['name'];
 
-        // 2. Lógica de Upload [cite: 79]
+        // 2. Lógica de Upload
         if ($request->hasFile('file_image')) {
             // Guarda na pasta storage/app/public/categories 
             $path = $request->file('file_image')->store('categories', 'public');
-            // Guarda apenas o nome do ficheiro para manter consistência [cite: 344]
+            // Guarda apenas o nome do ficheiro para manter consistência
             $category->image_url = basename($path);
         }
 
