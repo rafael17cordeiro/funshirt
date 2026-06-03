@@ -47,6 +47,42 @@
             @endif
         </div>
 
+        @if($user->user_type === 'C' && $user->customer)
+            <div class="pt-6 border-t border-gray-200">
+                <h3 class="text-md font-medium text-gray-900">{{ __('Billing & Shipping Information') }}</h3>
+            </div>
+
+            <div>
+                <x-input-label for="nif" :value="__('NIF')" />
+                <x-text-input id="nif" name="nif" type="text" class="mt-1 block w-full" :value="old('nif', $user->customer->nif)" maxlength="9" />
+                <x-input-error class="mt-2" :messages="$errors->get('nif')" />
+            </div>
+
+            <div>
+                <x-input-label for="address" :value="__('Address')" />
+                <x-text-input id="address" name="address" type="text" class="mt-1 block w-full" :value="old('address', $user->customer->address)" />
+                <x-input-error class="mt-2" :messages="$errors->get('address')" />
+            </div>
+
+            <div>
+                <x-input-label for="default_payment_type" :value="__('Default Payment Type')" />
+                <select id="default_payment_type" name="default_payment_type" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
+                    <option value="">{{ __('Select a method...') }}</option>
+                    <option value="VISA" {{ old('default_payment_type', $user->customer->default_payment_type) == 'VISA' ? 'selected' : '' }}>VISA</option>
+                    <option value="MC" {{ old('default_payment_type', $user->customer->default_payment_type) == 'MC' ? 'selected' : '' }}>MasterCard</option>
+                    <option value="PAYPAL" {{ old('default_payment_type', $user->customer->default_payment_type) == 'PAYPAL' ? 'selected' : '' }}>PayPal</option>
+                    <option value="MBWAY" {{ old('default_payment_type', $user->customer->default_payment_type) == 'MBWAY' ? 'selected' : '' }}>MB WAY</option>
+                </select>
+                <x-input-error class="mt-2" :messages="$errors->get('default_payment_type')" />
+            </div>
+
+            <div>
+                <x-input-label for="default_payment_ref" :value="__('Payment Reference')" />
+                <x-text-input id="default_payment_ref" name="default_payment_ref" type="text" class="mt-1 block w-full" :value="old('default_payment_ref', $user->customer->default_payment_ref)" placeholder="e.g., email or phone number" />
+                <x-input-error class="mt-2" :messages="$errors->get('default_payment_ref')" />
+            </div>
+        @endif
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
