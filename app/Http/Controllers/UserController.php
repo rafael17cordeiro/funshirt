@@ -30,8 +30,9 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'string', 'min:8', 'confirmed'], // Exige campo password_confirmation
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
             'user_type' => ['required', 'in:A,F'],
+            'gender' => ['required', 'in:M,F,O'], // ADICIONADO: Validação do género
         ]);
 
         User::create([
@@ -39,6 +40,7 @@ class UserController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'user_type' => $validated['user_type'],
+            'gender' => $validated['gender'], // ADICIONADO: Gravação do género
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'Colaborador criado com sucesso!');
@@ -54,14 +56,15 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(Request $request, User $user)
+public function update(Request $request, User $user)
     {
         if ($user->user_type === 'C') abort(403);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', \Illuminate\Validation\Rule::unique(User::class)->ignore($user->id)],
             'user_type' => ['required', 'in:A,F'],
+            'gender' => ['required', 'in:M,F'],
         ]);
 
         $user->update($validated);
