@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Contracts\Auth\MustVerifyEmail; // <-- 1. Confirma que tens esta linha!
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -13,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 
 #[Fillable(['name', 'email', 'password', 'user_type', 'gender', 'blocked'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable implements MustVerifyEmail // <-- 2. Adiciona o implements aqui!
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -29,5 +28,12 @@ class User extends Authenticatable implements MustVerifyEmail // <-- 2. Adiciona
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // ADICIONA ESTE MÉTODO AQUI:
+    public function customer()
+    {
+        // Como o 'id' do customer é FK para o 'id' do user (segundo a vossa BD)
+        return $this->hasOne(Customer::class, 'id', 'id');
     }
 }

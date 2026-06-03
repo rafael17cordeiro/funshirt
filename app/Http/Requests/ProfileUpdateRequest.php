@@ -26,6 +26,11 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            // Regras adicionadas para os clientes
+            'nif' => ['nullable', 'string', 'size:9'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'default_payment_type' => ['nullable', 'string', 'in:Visa,PayPal,MB WAY'],
+            'default_payment_ref' => ['nullable', 'string', 'max:255'],
         ];
     }
 }
