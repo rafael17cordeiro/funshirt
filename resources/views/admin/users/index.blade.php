@@ -58,13 +58,16 @@
                         <thead>
                             <tr>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/3">
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/4">
                                     Nome</th>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/3">
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/4">
                                     Email</th>
                                 <th scope="col"
                                     class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Cargo
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Estado
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-4 text-right font-bold text-gray-900 uppercase tracking-wider">Ações
@@ -73,7 +76,9 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($users as $user)
-                                <tr class="hover:bg-gray-50 transition duration-150">
+                                <tr
+                                    class="hover:bg-gray-50 transition duration-150 {{ $user->blocked ? 'bg-orange-50/50' : '' }}">
+
                                     <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
                                         {{ $user->name }}
                                         @if(auth()->id() === $user->id)
@@ -81,26 +86,66 @@
                                                 class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">Tu</span>
                                         @endif
                                     </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap text-gray-500">
                                         {{ $user->email }}
                                     </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($user->user_type === 'A')
                                             <span
-                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-900 text-white">
-                                                Administrador
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-900 text-white">Administrador</span>
+                                        @else
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">Funcionário</span>
+                                        @endif
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if($user->blocked)
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 border border-orange-200">
+                                                Bloqueado
                                             </span>
                                         @else
                                             <span
-                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">
-                                                Funcionário
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                                                Ativo
                                             </span>
                                         @endif
                                     </td>
+
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div class="flex justify-end items-center space-x-3">
+                                        <div class="flex justify-end items-center space-x-4">
+
+                                            @if(auth()->id() !== $user->id)
+                                                <form action="{{ route('admin.users.block', $user->id) }}" method="POST"
+                                                    class="inline-block m-0 p-0">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit"
+                                                        title="{{ $user->blocked ? 'Desbloquear Colaborador' : 'Bloquear Colaborador' }}"
+                                                        class="{{ $user->blocked ? 'text-orange-500 hover:text-orange-700' : 'text-gray-400 hover:text-orange-500' }} transition duration-150 flex items-center">
+                                                        @if($user->blocked)
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                                fill="currentColor" class="w-5 h-5">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z"
+                                                                    clip-rule="evenodd" />
+                                                            </svg>
+                                                        @else
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                                stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                                            </svg>
+                                                        @endif
+                                                    </button>
+                                                </form>
+                                            @endif
+
                                             <a href="{{ route('admin.users.edit', $user) }}" title="Editar"
-                                                class="text-gray-400 hover:text-grey-900 transition duration-colors">
+                                                class="text-gray-400 hover:text-gray-900 transition duration-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
