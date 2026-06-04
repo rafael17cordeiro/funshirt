@@ -57,7 +57,7 @@
             <hr class="border-slate-700 my-4">
 
             @if(auth()->user()->user_type === 'A')
-                <div x-data="{ open: {{ request()->routeIs('admin.clients.*', 'admin.users.*') ? 'true' : 'false' }} }">
+                <div x-data="{ open: true }">
                     <button @click="open = !open"
                         class="flex items-center justify-between w-full px-4 py-2.5 text-sm font-medium text-slate-300 rounded-md hover:bg-slate-700 hover:text-white transition-colors">
                         <div class="flex items-center">
@@ -86,8 +86,7 @@
                     </div>
                 </div>
 
-                <div
-                    x-data="{ open: {{ request()->routeIs('admin.categories.*', 'admin.colors.*', 'admin.tshirt_images.*', 'admin.prices.*') ? 'true' : 'false' }} }">
+                <div x-data="{ open: true }">
                     <button @click="open = !open"
                         class="flex items-center justify-between w-full px-4 py-2.5 text-sm font-medium text-slate-300 rounded-md hover:bg-slate-700 hover:text-white transition-colors">
                         <div class="flex items-center">
