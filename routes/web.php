@@ -9,6 +9,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\TshirtImageController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +30,13 @@ Route::middleware(['auth', 'role:C,A'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Rota para a Listagem de Encomendas do G4
+Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+// Rota para ver os Detalhes de uma Encomenda específica
+Route::get('/admin/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+// Rota para atualizar o estado da encomenda (G4)
+Route::patch('/admin/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.update-status');
 
 // ==========================================
 // CARRINHO DE COMPRAS
