@@ -203,11 +203,11 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 ### 🛠️ O que falta implementar (Grupos do Enunciado)
 
 #### G1. Autenticação, Perfil e Gestão de Utilizadores
-- [ ] Verificação/confirmação de e-mail obrigatória para novos clientes (via Mailtrap).
-- [ ] Recuperação de senha ("reset") com envio de link por e-mail (via Mailtrap).
+- [x] Verificação/confirmação de e-mail obrigatória para novos clientes (via Mailtrap).
+- [x] Recuperação de senha ("reset") com envio de link por e-mail (via Mailtrap).
 - [ ] **Área do Cliente:** Edição de dados pessoais e upload de fotografia/avatar.
-- [ ] **Backoffice do Admin:** CRUD completo para gestão de colaboradores (criar, bloquear ou remover funcionários e outros administradores).
-- [ ] **Backoffice do Admin:** Listagem, filtragem e bloqueio de clientes (usar *soft delete* obrigatoriamente se o cliente tiver histórico).
+- [x] **Backoffice do Admin:** CRUD completo para gestão de colaboradores (criar, bloquear ou remover funcionários e outros administradores).
+- [x] **Backoffice do Admin:** Listagem, filtragem e bloqueio de clientes (usar *soft delete* obrigatoriamente se o cliente tiver histórico).
 
 #### G2. Catálogo (Gestão de Backoffice)
 - [ ] **Backoffice do Admin:** CRUD completo de Imagens de T-shirts do catálogo público (com upload de ficheiros).
@@ -225,8 +225,8 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - [ ] **Integração de Pagamento:** Consumir a API externa simulada (`https://ainet-payments-api.vercel.app`) usando o *Laravel HTTP Client* para validar Visa, PayPal ou MB WAY.
 - [ ] **Registo na BD:** Gravação das tabelas `orders` e `order_items` replicando os preços exatos do momento da compra (imutabilidade do histórico).
 - [ ] **Histórico do Cliente:** Página para o cliente consultar as suas encomendas anteriores e detalhes.
-- [ ] **Logística dos Funcionários:** Tela para funcionários consultarem encomendas `pending` e transitá-las para `closed` pós-envio.
-- [ ] **Controlo do Admin:** Permissão para o Admin filtrar qualquer encomenda, alterá-la para `closed` ou `canceled` (com registo opcional do motivo de cancelamento).
+- [x] **Logística dos Funcionários:** Tela para funcionários consultarem encomendas `pending` e transitá-las para `closed` pós-envio.
+- [x] **Controlo do Admin:** Permissão para o Admin filtrar qualquer encomenda, alterá-la para `closed` ou `canceled` (com registo opcional do motivo de cancelamento).
 
 #### G5. Imagens Personalizadas
 - [ ] **Área Exclusiva do Cliente:** Espaço privado para o cliente fazer upload, consultar, atualizar e remover as suas próprias imagens (armazenadas em `storage/app/private/tshirt_images_private`).
@@ -234,7 +234,7 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 
 #### G6. Recibos e E-mails
 - [ ] **Geração de PDF:** Criar automaticamente o recibo em PDF estruturado (armazenado na pasta privada) assim que o estado passa para `closed`.
-- [ ] **Notificações por E-mail (Mailtrap):**
+- [x] **Notificações por E-mail (Mailtrap):**
 - [ ] Envio de e-mail ao criar encomenda (`pending`).
 - [ ] Envio de e-mail ao anular encomenda (`canceled`).
 - [ ] Envio de e-mail ao expedir encomenda (`closed`) com o recibo PDF em anexo.
