@@ -7,7 +7,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-lg font-medium text-gray-900">Gestão de Clientes</h2>
+                    <p class="mt-1 text-sm text-gray-600">Consulta, bloqueio e administração das contas de clientes da
+                        Funshirt.</p>
+                </div>
+            </div>
             @if(session('success'))
                 <div x-data="{ show: false }"
                     x-init="setTimeout(() => show = true, 50); setTimeout(() => show = false, 5000)" x-show="show"
@@ -36,19 +42,19 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="text-gray-900 overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-50">
+                        <thead>
                             <tr>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-500 uppercase tracking-wider w-1/3">
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/3">
                                     Nome</th>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-500 uppercase tracking-wider w-1/3">
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/3">
                                     Email</th>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-500 uppercase tracking-wider">Estado
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Estado
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-4 text-right font-bold text-gray-500 uppercase tracking-wider">Ações
+                                    class="px-6 py-4 text-right font-bold text-gray-900 uppercase tracking-wider">Ações
                                 </th>
                             </tr>
                         </thead>
