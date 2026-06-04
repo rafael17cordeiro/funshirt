@@ -205,14 +205,14 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 #### G1. Autenticação, Perfil e Gestão de Utilizadores
 - [x] Verificação/confirmação de e-mail obrigatória para novos clientes (via Mailtrap).
 - [x] Recuperação de senha ("reset") com envio de link por e-mail (via Mailtrap).
-- [ ] **Área do Cliente:** Edição de dados pessoais e upload de fotografia/avatar.
+- [x] **Área do Cliente:** Edição de dados pessoais e upload de fotografia/avatar.
 - [x] **Backoffice do Admin:** CRUD completo para gestão de colaboradores (criar, bloquear ou remover funcionários e outros administradores).
 - [x] **Backoffice do Admin:** Listagem, filtragem e bloqueio de clientes (usar *soft delete* obrigatoriamente se o cliente tiver histórico).
 
 #### G2. Catálogo (Gestão de Backoffice)
-- [ ] **Backoffice do Admin:** CRUD completo de Imagens de T-shirts do catálogo público (com upload de ficheiros).
-- [ ] **Backoffice do Admin:** CRUD completo de Categorias e Cores disponíveis para venda (com upload das respetivas t-shirts base).
-- [ ] **Backoffice do Admin:** Painel de configuração de preços da loja (preço catálogo, preço personalizada, descontos e limiar de quantidade na tabela `prices`).
+- [x] **Backoffice do Admin:** CRUD completo de Imagens de T-shirts do catálogo público (com upload de ficheiros).
+- [x] **Backoffice do Admin:** CRUD completo de Categorias e Cores disponíveis para venda (com upload das respetivas t-shirts base).
+- [x] **Backoffice do Admin:** Painel de configuração de preços da loja (preço catálogo, preço personalizada, descontos e limiar de quantidade na tabela `prices`).
 
 #### G3. Carrinho de Compras (Ajustes Finais)
 - [ ] Funcionalidade de alterar características (cor, tamanho e quantidade) diretamente na página do carrinho.
