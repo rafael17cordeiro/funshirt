@@ -17,4 +17,10 @@ class Customer extends Model
 
     // Desligar os timestamps automáticos do Laravel para esta tabela
     public $timestamps = false;
+
+    public function user()
+    {
+        // O segundo parâmetro 'id' diz ao Laravel que a chave estrangeira é o 'id' e não o 'user_id'
+        return $this->belongsTo(User::class, 'id');
+    }
 }
