@@ -42,13 +42,29 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
+            // Traduzido para Português
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'As credenciais fornecidas não são válidas.',
             ]);
         }
+
+        // --- INÍCIO DA NOSSA VERIFICAÇÃO DE BLOQUEIO ---
+        // ATENÇÃO: Substitui 'blocked' pelo nome exato da tua coluna na base de dados 
+        // (ex: 'is_blocked', 'estado', 'status', etc.)
+        if (Auth::user()->blocked) {
+
+            // 1. Fazemos logout imediato ao utilizador
+            Auth::logout();
+
+            // 2. Devolvemos um erro a explicar o motivo
+            throw ValidationException::withMessages([
+                'email' => 'A sua conta encontra-se bloqueada. Por favor, contacte a administração.',
+            ]);
+        }
+        // --- FIM DA VERIFICAÇÃO ---
 
         RateLimiter::clear($this->throttleKey());
     }
@@ -60,19 +76,18 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
         event(new Lockout($this));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
+        $minutes = ceil($seconds / 60);
 
+        // Traduzido e adaptado para Português
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
+            'email' => 'Demasiadas tentativas de login. Por favor, tente novamente em ' . $minutes . ' minuto(s).',
         ]);
     }
 
@@ -81,6 +96,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }
