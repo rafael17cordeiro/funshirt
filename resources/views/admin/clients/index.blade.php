@@ -42,19 +42,19 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="text-gray-900 overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-50">
+                        <thead>
                             <tr>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-500 uppercase tracking-wider w-1/3">
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/3">
                                     Nome</th>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-500 uppercase tracking-wider w-1/3">
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/3">
                                     Email</th>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-500 uppercase tracking-wider">Estado
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Estado
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-4 text-right font-bold text-gray-500 uppercase tracking-wider">Ações
+                                    class="px-6 py-4 text-right font-bold text-gray-900 uppercase tracking-wider">Ações
                                 </th>
                             </tr>
                         </thead>

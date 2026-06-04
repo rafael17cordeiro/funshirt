@@ -55,19 +55,19 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="text-gray-900 overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-50">
+                        <thead>
                             <tr>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-500 uppercase tracking-wider w-1/3">
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/3">
                                     Nome</th>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-500 uppercase tracking-wider w-1/3">
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/3">
                                     Email</th>
                                 <th scope="col"
-                                    class="px-6 py-4 text-left font-bold text-gray-500 uppercase tracking-wider">Cargo
+                                    class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Cargo
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-4 text-right font-bold text-gray-500 uppercase tracking-wider">Ações
+                                    class="px-6 py-4 text-right font-bold text-gray-900 uppercase tracking-wider">Ações
                                 </th>
                             </tr>
                         </thead>
@@ -100,7 +100,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <div class="flex justify-end items-center space-x-3">
                                             <a href="{{ route('admin.users.edit', $user) }}" title="Editar"
-                                                class="text-gray-400 hover:text-indigo-600 transition duration-150">
+                                                class="text-gray-400 hover:text-grey-900 transition duration-colors">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
