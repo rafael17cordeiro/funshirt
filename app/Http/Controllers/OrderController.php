@@ -61,4 +61,15 @@ class OrderController extends Controller
         return redirect()->route('admin.orders.index')
             ->with('success', "Encomenda #{$order->id} foi {$statusPt} com sucesso!");
     }
+
+    public function myOrders()
+    {
+        // Vai buscar APENAS as encomendas cujo cliente é o utilizador autenticado
+        $orders = Order::where('customer_id', auth()->id())
+            ->with('orderItems') // Carrega os itens caso queiras mostrar resumos
+            ->latest()
+            ->paginate(10);
+
+        return view('customer.orders.index', compact('orders'));
+    }
 }
