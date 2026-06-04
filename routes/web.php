@@ -38,6 +38,10 @@ Route::get('/admin/orders/{order}', [OrderController::class, 'show'])->name('adm
 // Rota para atualizar o estado da encomenda (G4)
 Route::patch('/admin/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.update-status');
 
+
+// Rota para o Cliente ver as suas próprias encomendas
+Route::get('/minhas-encomendas', [\App\Http\Controllers\OrderController::class, 'myOrders'])->name('customer.orders.index');
+
 // ==========================================
 // CARRINHO DE COMPRAS
 // ==========================================
