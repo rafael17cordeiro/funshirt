@@ -1,55 +1,65 @@
-@extends('layouts.store')
+<x-app-layout>
+    <x-slot name="header">
+        {{ __('Gestão de Preços') }}
+    </x-slot>
 
-@section('content')
-<div class="max-w-4xl mx-auto px-4 py-12 font-sans tracking-wide">
-    <div class="mb-10 border-b border-zinc-100 pb-4">
-        <h1 class="text-2xl font-light text-zinc-900 uppercase tracking-widest">Configuração de Preços</h1>
-        <p class="text-xs text-zinc-500 mt-1">Gestão global das regras de negócio, valores e descontos</p>
-    </div>
+    <div class="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
 
-    @if(session('success'))
-        <div class="mb-8 p-4 bg-zinc-50 border border-zinc-200 text-zinc-800 text-sm tracking-wide rounded-sm flex items-center justify-between">
-            <span>{{ session('success') }}</span>
+        <div class="mb-6">
+            <h2 class="text-lg font-medium text-gray-900">
+                {{ __('Configuração de Preços') }}
+            </h2>
+            <p class="mt-1 text-sm text-gray-600">
+                {{ __('Gestão global das regras de negócio, valores e descontos aplicados na loja.') }}
+            </p>
         </div>
-    @endif
 
-    <form action="{{ route('admin.prices.update') }}" method="POST" class="bg-white border border-zinc-200 p-8 rounded-sm shadow-sm">
-        @csrf
-        @method('PUT')
+        @if(session('success'))
+            <div
+                class="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 text-sm font-medium rounded-md shadow-sm flex items-center justify-between">
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {{-- Magia Dinâmica: Lê todas as colunas da BD exceto o ID --}}
-            @foreach($price->getAttributes() as $key => $value)
-                @if($key !== 'id')
-                    <div>
-                        <label for="{{ $key }}" class="block text-xs uppercase tracking-widest text-zinc-500 font-medium mb-3">
-                            {{ ucwords(str_replace('_', ' ', $key)) }}
-                        </label>
-                        <div class="relative">
-                            {{-- Só mostra o símbolo do Euro se o nome da coluna contiver a palavra 'price' --}}
-                            @if(str_contains($key, 'price'))
-                                <span class="absolute left-4 top-3 text-zinc-400 text-sm font-medium">€</span>
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-200">
+            <div class="p-6 text-gray-900">
+
+                <form action="{{ route('admin.prices.update') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {{-- Magia Dinâmica: Lê todas as colunas da BD exceto o ID --}}
+                        @foreach($price->getAttributes() as $key => $value)
+                            @if($key !== 'id')
+                                <div>
+                                    <x-input-label for="{{ $key }}" :value="ucwords(str_replace('_', ' ', $key))" />
+
+                                    <div class="relative mt-1 shadow-sm rounded-md">
+                                        {{-- Só mostra o símbolo do Euro se o nome da coluna contiver a palavra 'price' --}}
+                                        @if(str_contains($key, 'price'))
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <span class="text-gray-500 sm:text-sm">€</span>
+                                            </div>
+                                        @endif
+
+                                        <input type="number" step="0.01" name="{{ $key }}" id="{{ $key }}" value="{{ $value }}"
+                                            class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md sm:text-sm transition-colors @if(str_contains($key, 'price')) pl-7 @endif"
+                                            required>
+                                    </div>
+                                </div>
                             @endif
-                            
-                            <input type="number" 
-                                step="0.01"
-                                name="{{ $key }}" 
-                                id="{{ $key }}" 
-                                value="{{ $value }}"
-                                class="w-full border border-zinc-200 px-4 py-3 text-sm rounded-sm focus:outline-none focus:border-zinc-950 transition @if(str_contains($key, 'price')) pl-8 @endif"
-                                required>
-                        </div>
+                        @endforeach
                     </div>
-                @endif
-            @endforeach
-        </div>
 
-        <div class="flex items-center justify-end space-x-4 pt-10 mt-10 border-t border-zinc-100">
-            <button type="submit" 
-                    class="bg-zinc-950 text-white text-xs uppercase tracking-widest px-8 py-4 hover:bg-zinc-800 transition duration-300 rounded-sm font-medium shadow-md">
-                Guardar Atualizações
-            </button>
+                    <div class="flex items-center justify-end mt-8 pt-6 border-t border-gray-100">
+                        <x-primary-button class="bg-black hover:bg-gray-800 px-8">
+                            {{ __('Guardar Atualizações') }}
+                        </x-primary-button>
+                    </div>
+                </form>
+
+            </div>
         </div>
-    </form>
-</div>
-@endsection
+    </div>
+</x-app-layout>

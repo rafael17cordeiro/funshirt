@@ -1,53 +1,63 @@
-@extends('layouts.store')
+<x-app-layout>
+    <x-slot name="header">
+        {{ __('Criar Categoria') }}
+    </x-slot>
 
-@section('content')
-<div class="max-w-2xl mx-auto px-4 py-8 font-sans tracking-wide">
-    <div class="mb-8 border-b border-zinc-100 pb-4">
-        <h1 class="text-2xl font-light text-zinc-900 uppercase tracking-widest">Criar Categoria</h1>
-        <p class="text-xs text-zinc-500 mt-1">Adicionar uma nova secção ao catálogo público</p>
-    </div>
-
-    <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
-        @csrf
-
-        <div>
-            <label for="name" class="block text-xs uppercase tracking-widest text-zinc-500 font-medium mb-2">Nome da Categoria *</label>
-            <input type="text" 
-                   name="name" 
-                   id="name" 
-                   value="{{ old('name') }}"
-                   class="w-full border border-zinc-200 px-4 py-3 text-sm rounded-sm focus:outline-none focus:border-zinc-950 transition @error('name') border-red-400 @enderror"
-                   placeholder="Ex: Frases Engraçadas, Geek, Desporto..." 
-                   required>
-            @error('name')
-                <p class="text-xs text-red-500 mt-1 font-light">{{ $message }}</p>
-            @enderror
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        
+        <div class="mb-6">
+            <h2 class="text-lg font-medium text-gray-900">
+                {{ __('Nova Categoria') }}
+            </h2>
+            <p class="mt-1 text-sm text-gray-600">
+                {{ __('Adicione uma nova secção ao catálogo público.') }}
+            </p>
         </div>
 
-        <div>
-            <label class="block text-xs uppercase tracking-widest text-zinc-500 font-medium mb-2">Imagem de Capa (Opcional)</label>
-            <div class="border border-dashed border-zinc-200 bg-zinc-50/50 p-6 rounded-sm text-center">
-                <input type="file" 
-                       name="file_image" 
-                       id="file_image" 
-                       class="text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-xs file:uppercase file:tracking-wider file:font-semibold file:bg-zinc-950 file:text-white hover:file:bg-zinc-800 file:cursor-pointer cursor-pointer">
-                <p class="text-xxs text-zinc-400 mt-2">Formatos aceites: JPG, PNG, GIF (Máx. 2MB)</p>
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-200">
+            <div class="p-6 text-gray-900">
+                
+                <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data" class="max-w-2xl">
+                    @csrf
+
+                    <div>
+                        <x-input-label for="name" :value="__('Nome da Categoria *')" />
+                        <x-text-input id="name" name="name" type="text" class="block mt-1 w-full" 
+                            :value="old('name')" placeholder="Ex: Frases Engraçadas, Geek, Desporto..." required autofocus />
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    </div>
+
+                    <div class="mt-6">
+                        <x-input-label for="file_image" :value="__('Imagem de Capa (Opcional)')" />
+                        
+                        <div class="mt-2">
+                            <input type="file" name="file_image" id="file_image"
+                                class="block w-full text-sm text-gray-500 
+                                file:mr-4 file:py-2 file:px-4 
+                                file:rounded-md file:border-0 
+                                file:text-sm file:font-semibold 
+                                file:bg-black file:text-white 
+                                hover:file:bg-gray-800 cursor-pointer 
+                                border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <p class="mt-2 text-xs text-gray-500">
+                                {{ __('Formatos aceites: JPG, PNG, GIF (Máx. 2MB)') }}
+                            </p>
+                        </div>
+                        <x-input-error :messages="$errors->get('file_image')" class="mt-2" />
+                    </div>
+
+                    <div class="flex items-center justify-end mt-8 space-x-4 border-t border-gray-100 pt-6">
+                        <a href="{{ route('admin.categories.index') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                            {{ __('Cancelar') }}
+                        </a>
+                        
+                        <x-primary-button class="bg-black hover:bg-gray-800">
+                            {{ __('Gravar Categoria') }}
+                        </x-primary-button>
+                    </div>
+                </form>
+
             </div>
-            @error('file_image')
-                <p class="text-xs text-red-500 mt-1 font-light">{{ $message }}</p>
-            @enderror
         </div>
-
-        <div class="flex items-center justify-end space-x-4 pt-4 border-t border-zinc-100">
-            <a href="{{ route('admin.categories.index') }}" 
-               class="text-xs uppercase tracking-widest text-zinc-500 hover:text-zinc-950 font-medium transition">
-                Cancelar
-            </a>
-            <button type="submit" 
-                    class="bg-zinc-950 text-white text-xs uppercase tracking-widest px-6 py-3 hover:bg-zinc-800 transition duration-300 rounded-sm font-medium">
-                Gravar Categoria
-            </button>
-        </div>
-    </form>
-</div>
-@endsection
+    </div>
+</x-app-layout>

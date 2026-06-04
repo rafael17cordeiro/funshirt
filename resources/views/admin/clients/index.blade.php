@@ -7,7 +7,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-lg font-medium text-gray-900">Gestão de Clientes</h2>
+                    <p class="mt-1 text-sm text-gray-600">Consulta, bloqueio e administração das contas de clientes da
+                        Funshirt.</p>
+                </div>
+            </div>
             @if(session('success'))
                 <div x-data="{ show: false }"
                     x-init="setTimeout(() => show = true, 50); setTimeout(() => show = false, 5000)" x-show="show"
