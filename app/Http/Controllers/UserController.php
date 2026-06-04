@@ -104,17 +104,20 @@ class UserController extends Controller
         // Encontra o utilizador pelo ID, mesmo que esteja apagado (trashed)
         $user = User::withTrashed()->findOrFail($id);
 
-        if ($user->user_type !== 'C') {
-            abort(403, 'Apenas podes bloquear/desbloquear clientes.');
+        // Trava de segurança: Impede o administrador de bloquear a própria conta
+        if (auth()->id() === $user->id) {
+            return back()->withErrors(['error' => 'Não podes bloquear a tua própria conta!']);
         }
 
         // Inverte o estado atual do bloqueio
         $user->blocked = !$user->blocked;
         $user->save();
 
+        // Adapta a mensagem de sucesso consoante o tipo de utilizador
         $status = $user->blocked ? 'bloqueado' : 'desbloqueado';
+        $tipo = $user->user_type === 'C' ? 'cliente' : 'colaborador';
 
-        return back()->with('success', "O cliente foi {$status} com sucesso!");
+        return back()->with('success', "O {$tipo} foi {$status} com sucesso!");
     }
 
     public function destroyClient($id)
@@ -134,4 +137,7 @@ class UserController extends Controller
             return back()->with('success', 'Conta de cliente apagada (Soft Delete) com sucesso!');
         }
     }
+
+
+
 }

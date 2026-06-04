@@ -42,6 +42,8 @@ Route::patch('/admin/orders/{order}/status', [OrderController::class, 'updateSta
 // Rota para o Cliente ver as suas próprias encomendas
 Route::get('/minhas-encomendas', [\App\Http\Controllers\OrderController::class, 'myOrders'])->name('customer.orders.index');
 
+Route::patch('/admin/users/{id}/block', [UserController::class, 'toggleBlock'])->name('admin.users.block');
+
 // ==========================================
 // CARRINHO DE COMPRAS
 // ==========================================
