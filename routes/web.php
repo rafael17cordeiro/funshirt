@@ -31,6 +31,10 @@ Route::middleware(['auth', 'role:C,A'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// REQUISITO G4: Rotas do Checkout Protegida
+Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->middleware(['auth'])->name('checkout.index');
+Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'store'])->middleware(['auth'])->name('checkout.store');
+
 // Rota para a Listagem de Encomendas do G4
 Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders.index');
 // Rota para ver os Detalhes de uma Encomenda específica

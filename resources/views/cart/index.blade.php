@@ -103,7 +103,7 @@
                         </dl>
                     </div>
 
-                    <a href="#"
+                    <a href="{{ route('checkout.index') }}"
                         class="rounded mt-8 w-full bg-black text-white font-bold uppercase tracking-widest text-sm py-4 flex justify-center hover:bg-gray-800 transition duration-300">
                         Finalizar Encomenda
                     </a>
