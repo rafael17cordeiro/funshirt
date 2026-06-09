@@ -47,8 +47,10 @@ Route::patch('/admin/users/{id}/block', [UserController::class, 'toggleBlock'])-
 // ==========================================
 // CARRINHO DE COMPRAS
 // ==========================================
-Route::post('/carrinho/adicionar', [CartController::class, 'store'])->name('cart.store');
 Route::get('/carrinho', [CartController::class, 'index'])->name('cart.index');
+Route::post('/carrinho/adicionar', [CartController::class, 'store'])->name('cart.store');
+Route::patch('/carrinho/{key}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/carrinho/limpar', [CartController::class, 'clear'])->name('cart.clear'); // Colocar ANTES da rota com parâmetro {key} para evitar conflitos de URL
 Route::delete('/carrinho/{key}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 // ==========================================

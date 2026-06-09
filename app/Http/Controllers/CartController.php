@@ -77,4 +77,37 @@ class CartController extends Controller
 
         return back()->with('success', 'Produto removido com sucesso.');
     }
+
+    public function update(Request $request, $key)
+    {
+        $request->validate([
+            'quantity' => 'required|integer|max:50',
+        ]);
+
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$key])) {
+            $newQty = $request->quantity;
+
+            // REQUISITO G3: Exclusão automática se qtd = 0
+            if ($newQty <= 0) {
+                unset($cart[$key]);
+                session()->put('cart', $cart);
+                return redirect()->route('cart.index')->with('success', 'Produto removido automaticamente do carrinho.');
+            }
+
+            $cart[$key]['quantity'] = $newQty;
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->route('cart.index')->with('success', 'Quantidade atualizada com sucesso!');
+    }
+
+    public function clear()
+    {
+        // REQUISITO G3: Limpeza total do carrinho
+        session()->forget('cart');
+
+        return redirect()->route('cart.index')->with('success', 'O seu carrinho foi totalmente esvaziado.');
+    }
 }
