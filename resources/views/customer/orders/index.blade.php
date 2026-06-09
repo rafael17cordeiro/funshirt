@@ -22,6 +22,7 @@
                                 <th scope="col" class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Data</th>
                                 <th scope="col" class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Estado</th>
                                 <th scope="col" class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Total</th>
+                                <th scope="col" class="px-6 py-4 text-right font-bold text-gray-900 uppercase tracking-wider">Ações</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -32,7 +33,11 @@
                                     </td>
                                     
                                     <td class="px-6 py-4 whitespace-nowrap text-gray-600">
-                                        {{ $order->created_at->format('d/m/Y') }} às {{ $order->created_at->format('H:i') }}
+                                        @if(!empty($order->created_at))
+                                            {{ date('d/m/Y', strtotime($order->created_at)) }} às {{ date('H:i', strtotime($order->created_at)) }}
+                                        @else
+                                            Data indisponível
+                                        @endif
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -52,10 +57,15 @@
                                     <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">
                                         {{ number_format($order->total_price, 2, ',', ' ') }} €
                                     </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="{{ route('customer.orders.show', $order->id) }}" class="text-indigo-600 hover:text-indigo-900 font-bold">
+                                            Ver Detalhes
+                                        </a>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="px-6 py-12 text-center text-gray-500">
+                                    <td colspan="5" class="px-6 py-12 text-center text-gray-500">
                                         Ainda não realizaste nenhuma encomenda.
                                     </td>
                                 </tr>

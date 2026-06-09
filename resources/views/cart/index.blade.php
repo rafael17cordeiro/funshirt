@@ -48,18 +48,27 @@
                                     <div class="flex flex-1 items-end justify-between text-sm">
                                         <div class="flex items-center space-x-2">
                                             <label for="quantity-{{ $key }}" class="text-gray-500 font-bold uppercase text-xs tracking-wider">Qtd:</label>
-                                            <form action="{{ route('cart.update', $key) }}" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <select id="quantity-{{ $key }}" name="quantity" onchange="this.form.submit()" 
-                                                    class="rounded border-gray-300 py-1 pl-2 pr-8 text-sm font-bold text-gray-900 focus:border-black focus:ring-black">
-                                                    @for ($i = 0; $i <= 10; $i++) {{-- Inclui 0 para testar a exclusão automática --}}
-                                                        <option value="{{ $i }}" {{ $item['quantity'] == $i ? 'selected' : '' }}>
-                                                            {{ $i }} {{ $i == 0 ? '(Remover)' : '' }}
-                                                        </option>
-                                                    @endfor
-                                                </select>
-                                            </form>
+                                                @foreach($cart as $key => $item)
+                                                <form action="{{ route('cart.update', $key) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+
+                                                    <select name="size" onchange="this.form.submit()">
+                                                        @foreach(['XS', 'S', 'M', 'L', 'XL'] as $s)
+                                                            <option value="{{ $s }}" {{ $item['size'] == $s ? 'selected' : '' }}>{{ $s }}</option>
+                                                        @endforeach
+                                                    </select>
+
+                                                    <select name="color_code" onchange="this.form.submit()">
+                                                        @foreach($colors as $color)
+                                                            <option value="{{ $color->code }}" {{ $item['color_code'] == $color->code ? 'selected' : '' }}>
+                                                                {{ $color->name }} </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                    <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="0" onchange="this.form.submit()">
+                                                </form>
+                                            @endforeach
                                         </div>
 
                                         <div class="flex">

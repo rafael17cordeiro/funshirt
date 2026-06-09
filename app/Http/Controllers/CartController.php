@@ -10,6 +10,11 @@ class CartController extends Controller
 {
     public function store(Request $request)
     {
+        if (auth()->user() && auth()->user()->user_type === 'A') {
+            // Mantém o admin na página onde estava e avisa-o do bloqueio
+            return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
+        }
+
         $request->validate([
             'tshirt_image_id' => 'required|exists:tshirt_images,id',
             'size' => 'required|string',
@@ -25,6 +30,13 @@ class CartController extends Controller
 
         $cartKey = $request->tshirt_image_id . '_' . $request->color_code . '_' . $request->size;
 
+        $validColors = \App\Models\Color::pluck('code')->toArray();
+
+        // Quando o utilizador escolhe uma cor:
+        if (!in_array(strtolower($request->color_code), $validColors)) {
+            return back()->with('error', 'Cor inválida!');
+        }
+
         if (isset($cart[$cartKey])) {
             $cart[$cartKey]['quantity'] += $request->quantity;
         } else {
@@ -33,7 +45,7 @@ class CartController extends Controller
                 'name' => $tshirt->name,
                 'image_url' => $tshirt->image_url,
                 'size' => $request->size,
-                'color_code' => $request->color_code,
+                'color_code' => strtolower($request->color_code),
                 'quantity' => $request->quantity,
                 'unit_price' => $priceConfig->unit_price_catalog,
             ];
@@ -48,17 +60,21 @@ class CartController extends Controller
 
     public function index()
     {
+       if (auth()->user() && auth()->user()->user_type === 'A') {
+            // Mantém o admin na página onde estava e avisa-o do bloqueio
+            return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
+        }
 
         $cart = session()->get('cart', []);
-
-
         $total = 0;
         foreach ($cart as $item) {
             $total += $item['unit_price'] * $item['quantity'];
         }
 
+        // Busca todas as cores da base de dados
+        $colors = \App\Models\Color::all(); 
 
-        return view('cart.index', compact('cart', 'total'));
+        return view('cart.index', compact('cart', 'total', 'colors'));
     }
 
     public function destroy($key)
@@ -80,27 +96,44 @@ class CartController extends Controller
 
     public function update(Request $request, $key)
     {
-        $request->validate([
-            'quantity' => 'required|integer|max:50',
-        ]);
-
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$key])) {
-            $newQty = $request->quantity;
-
-            // REQUISITO G3: Exclusão automática se qtd = 0
-            if ($newQty <= 0) {
-                unset($cart[$key]);
-                session()->put('cart', $cart);
-                return redirect()->route('cart.index')->with('success', 'Produto removido automaticamente do carrinho.');
-            }
-
-            $cart[$key]['quantity'] = $newQty;
-            session()->put('cart', $cart);
+        // 1. Verifica se o item existe na chave antiga
+        if (!isset($cart[$key])) {
+            return back()->with('error', 'Item não encontrado.');
         }
 
-        return redirect()->route('cart.index')->with('success', 'Quantidade atualizada com sucesso!');
+        // 2. Se qtd for 0, remove (G3)
+        if ($request->quantity <= 0) {
+            unset($cart[$key]);
+            session()->put('cart', $cart);
+            return redirect()->route('cart.index')->with('success', 'Produto removido.');
+        }
+
+        $validColors = \App\Models\Color::pluck('code')->toArray();
+
+        // Quando o utilizador escolhe uma cor:
+        if (!in_array(strtolower($request->color_code), $validColors)) {
+            return back()->with('error', 'Cor inválida!');
+        }
+
+        // 3. Lógica da nova chave (se mudou tamanho ou cor)
+        $newKey = $cart[$key]['tshirt_image_id'] . '_' . strtolower($request->color_code) . '_' . $request->size;
+
+        if ($key !== $newKey) {
+            $itemData = $cart[$key];
+            $itemData['quantity'] = $request->quantity;
+            $itemData['size'] = $request->size;
+            $itemData['color_code'] = strtolower($request->color_code);
+            
+            unset($cart[$key]);
+            $cart[$newKey] = $itemData;
+        } else {
+            $cart[$key]['quantity'] = $request->quantity;
+        }
+
+        session()->put('cart', $cart);
+        return redirect()->route('cart.index')->with('success', 'Carrinho atualizado.');
     }
 
     public function clear()

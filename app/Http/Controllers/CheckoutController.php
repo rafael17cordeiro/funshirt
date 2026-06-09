@@ -10,8 +10,13 @@ class CheckoutController extends Controller
 {
     public function index()
     {
+        // SEGURANÇA: Bloquear administradores de acederem ao checkout
+        if (auth()->user() && auth()->user()->user_type === 'A') {
+            // Mantém o admin na página onde estava e avisa-o do bloqueio
+            return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
+        }
+    
         $cart = session()->get('cart', []);
-
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'O seu carrinho está vazio.');
         }
@@ -34,6 +39,11 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
+       if (auth()->user() && auth()->user()->user_type === 'A') {
+            // Mantém o admin na página onde estava e avisa-o do bloqueio
+            return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
+        }
+
         $cart = session()->get('cart', []);
 
         if (empty($cart)) {
@@ -106,10 +116,22 @@ class CheckoutController extends Controller
 
             // Inserir os Itens da Encomenda (order_items)
             foreach ($cart as $item) {
+                // 1. Normaliza: Se na BD o código precisa de cardinal, adiciona. 
+                // Se na BD o código é exatamente o que está no select, mantém.
+                $codigoCor =strtolower( $item['color_code'] ); 
+
+                // 2. Depuração: Testa se a cor existe antes de inserir
+                $corExiste = DB::table('colors')->where('code', $codigoCor)->exists();
+                
+                if (!$corExiste) {
+                    // Se cair aqui, é porque o código que tens no carrinho NÃO existe na tabela colors
+                    throw new \Exception("Cor '{$codigoCor}' não encontrada na tabela de cores.");
+                }
+
                 DB::table('order_items')->insert([
                     'order_id' => $order,
                     'tshirt_image_id' => $item['tshirt_image_id'],
-                    'color_code' => $item['color_code'],
+                    'color_code' => $codigoCor,
                     'size' => $item['size'],
                     'qty' => $item['quantity'],
                     'unit_price' => $item['unit_price'],
