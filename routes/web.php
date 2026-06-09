@@ -31,6 +31,16 @@ Route::middleware(['auth', 'role:C,A'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Listagem (aponta para a página que já tens criada)
+Route::get('/encomendas', [OrderController::class, 'myOrders'])->name('customer.orders.index');
+
+// Detalhes da encomenda
+Route::get('/encomendas/{id}', [OrderController::class, 'showOrder'])->name('customer.orders.show');
+
+// REQUISITO G4: Rotas do Checkout Protegida
+Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->middleware(['auth'])->name('checkout.index');
+Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'store'])->middleware(['auth'])->name('checkout.store');
+
 // Rota para a Listagem de Encomendas do G4
 Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders.index');
 // Rota para ver os Detalhes de uma Encomenda específica
@@ -47,9 +57,13 @@ Route::patch('/admin/users/{id}/block', [UserController::class, 'toggleBlock'])-
 // ==========================================
 // CARRINHO DE COMPRAS
 // ==========================================
-Route::post('/carrinho/adicionar', [CartController::class, 'store'])->name('cart.store');
 Route::get('/carrinho', [CartController::class, 'index'])->name('cart.index');
+Route::post('/carrinho/adicionar', [CartController::class, 'store'])->name('cart.store');
+// Route::patch('/carrinho/{key}', [CartController::class, 'update'])->name('cart.update');
+Route::put('/carrinho/{key}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/carrinho/limpar', [CartController::class, 'clear'])->name('cart.clear'); // Colocar ANTES da rota com parâmetro {key} para evitar conflitos de URL
 Route::delete('/carrinho/{key}', [CartController::class, 'destroy'])->name('cart.destroy');
+
 
 // ==========================================
 // BACKOFFICE ADMIN (Apenas Administradores)
