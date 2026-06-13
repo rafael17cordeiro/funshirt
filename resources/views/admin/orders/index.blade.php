@@ -87,7 +87,11 @@
                                             {{ $order->customer->user->name ?? 'Cliente Desconhecido' }}
                                         </div>
                                         <div class="text-xs text-gray-500 mt-1">
-                                            {{ $order->created_at->format('d/m/Y H:i') }}
+                                            @if($order->created_at)
+                                                {{ $order->created_at->format('d/m/Y H:i') }}
+                                            @else
+                                                {{ \Carbon\Carbon::parse($order->date)->format('d/m/Y') }}
+                                            @endif
                                         </div>
                                     </td>
 
