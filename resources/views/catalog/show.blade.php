@@ -46,11 +46,35 @@
             </div>
         @endif
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+        <div x-data="{ 
+            selectedColorCode: '', 
+            colorMap: {
+                @foreach($colors as $color)
+                    '{{ $color->code }}': '{{ $color->code_html ?? '#EBEDEE' }}',
+                @endforeach
+            },
+            get currentBgColor() {
+                return this.colorMap[this.selectedColorCode] || '#EBEDEE';
+            }
+        }" class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
 
-            <div class="bg-[#EBEDEE] relative aspect-[4/5] overflow-hidden">
-                <img src="{{ asset('storage/tshirt_images/' . $tshirt->image_url) }}" alt="{{ $tshirt->name }}"
-                    class="w-full h-full object-cover object-center">
+            <div :style="{ backgroundColor: currentBgColor }" 
+                 class="relative aspect-[4/5] overflow-hidden rounded transition-colors duration-500 flex items-center justify-center p-8">
+                
+                @if($tshirt->image_url && file_exists(public_path('storage/tshirt_images/' . $tshirt->image_url))))
+                    
+                    <img src="{{ asset('storage/mockups/tshirt_shadows.png') }}" 
+                         class="absolute inset-0 w-full h-full object-contain p-6 pointer-events-none z-10" 
+                         alt="Textura T-Shirt">
+
+                    <div class="absolute inset-0 flex items-center justify-center z-20 pt-6">
+                        <img src="{{ asset('storage/tshirt_images/' . $tshirt->image_url) }}" 
+                             alt="{{ $tshirt->name }}"
+                             class="w-1/3 aspect-[3/4] object-cover mix-blend-multiply pointer-events-none">
+                    </div>
+                @else
+                    <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs uppercase tracking-widest font-bold">Sem Imagem</div>
+                @endif
             </div>
 
             <div class="flex flex-col justify-center">
@@ -89,7 +113,7 @@
 
                         <div>
                             <label for="color_code" class="block text-xs font-bold uppercase text-gray-700 mb-2">Cor da Base</label>
-                            <select id="color_code" name="color_code"
+                            <select id="color_code" name="color_code" x-model="selectedColorCode"
                                 class="w-full border-gray-300 rounded focus:ring-black focus:border-black text-sm uppercase"
                                 required>
                                 <option value="" disabled selected>Selecionar</option>
