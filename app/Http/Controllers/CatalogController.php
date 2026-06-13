@@ -10,24 +10,34 @@ use Illuminate\Http\Request;
 
 class CatalogController extends Controller
 {
-    public function index(Request $request)
+    public function index(\Illuminate\Http\Request $request)
     {
-        $priceConfig = Price::first();
-        $categories = Category::orderBy('name')->get();
+        // Vai buscar as imagens e junta logo as categorias
+        $query = \App\Models\TshirtImage::with('category');
 
+        // 1. Lógica da Barra de Pesquisa (Nome e Descrição)
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('description', 'like', '%' . $searchTerm . '%');
+            });
+        }
 
-        $query = TshirtImage::whereNull('customer_id');
-
-
-        if ($request->has('category')) {
+        // 2. Lógica do Filtro de Categorias
+        if ($request->filled('category')) {
             $query->where('category_id', $request->category);
         }
 
+        // Vai buscar os dados filtrados à Base de Dados
+        $tshirts = $query->get(); // Se quiseres paginação muda get() para paginate(12)
+        $categories = \App\Models\Category::all();
+        $priceConfig = \App\Models\Price::first();
 
-        $tshirts = $query->get();
-
-        return view('catalog.index', compact('tshirts', 'priceConfig', 'categories'));
+        // Envia as 3 variáveis exatas que a nossa View precisa!
+        return view('catalog.index', compact('tshirts', 'categories', 'priceConfig'));
     }
+
 
 
 

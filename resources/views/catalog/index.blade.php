@@ -2,26 +2,45 @@
 
 @section('content')
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
-        <h1 class="text-3xl font-bold uppercase tracking-wide mb-6">
-            T-Shirts Estampadas <span class="text-gray-400 text-lg font-normal">[{{ $tshirts->count() }}]</span>
-        </h1>
+        
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-6">
+            
+            <h1 class="text-3xl font-bold uppercase tracking-wide shrink-0">
+                T-Shirts Estampadas <span id="catalog-count" class="text-gray-400 text-lg font-normal">[{{ $tshirts->count() }}]</span>
+            </h1>
+
+            <form id="catalog-form" action="{{ route('catalog.index') }}" method="GET" class="w-full md:w-auto md:min-w-[350px]">
+                @if(request('category'))
+                    <input type="hidden" name="category" value="{{ request('category') }}">
+                @endif
+                
+                <div class="relative w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                    
+                    <input type="text" id="search-input" name="search" value="{{ request('search') }}" placeholder="Pesquisar ..."
+                           autocomplete="off"
+                           class="w-full border border-gray-300 py-2.5 pl-12 pr-6 rounded-full focus:outline-none focus:border-black transition text-sm bg-transparent placeholder:text-gray-400">
+                </div>
+            </form>
+        </div>
 
         <div class="border-b border-gray-200 mb-6 relative group">
             <button onclick="document.getElementById('category-scroll').scrollBy({ left: -250, behavior: 'smooth' })"
                 class="absolute left-0 top-0 bottom-2 z-10 flex items-center bg-gradient-to-r from-white via-white to-transparent pr-6 text-gray-300 hover:text-black transition">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                    stroke="currentColor" class="w-4 h-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                 </svg>
             </button>
 
             <div id="category-scroll" class="flex space-x-8 overflow-x-auto text-sm pb-3 px-8 hide-scrollbar">
-                <a href="{{ route('catalog.index') }}"
+                <a href="{{ route('catalog.index', ['search' => request('search')]) }}"
                     class="whitespace-nowrap pb-1 {{ !request('category') ? 'font-bold border-b-2 border-black text-black' : 'text-gray-500 hover:text-black transition' }}">
                     Todas as Imagens
                 </a>
                 @foreach ($categories as $category)
-                    <a href="{{ route('catalog.index', ['category' => $category->id]) }}"
+                    <a href="{{ route('catalog.index', ['category' => $category->id, 'search' => request('search')]) }}"
                         class="whitespace-nowrap pb-1 {{ request('category') == $category->id ? 'font-bold border-b-2 border-black text-black' : 'text-gray-500 hover:text-black transition' }}">
                         {{ $category->name }}
                     </a>
@@ -30,45 +49,101 @@
 
             <button onclick="document.getElementById('category-scroll').scrollBy({ left: 250, behavior: 'smooth' })"
                 class="absolute right-0 top-0 bottom-2 z-10 flex items-center bg-gradient-to-l from-white via-white to-transparent pl-6 text-gray-300 hover:text-black transition">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                    stroke="currentColor" class="w-4 h-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                 </svg>
             </button>
         </div>
     </div>
 
-    <main class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            @foreach ($tshirts as $tshirt)
-                <a href="{{ route('catalog.show', $tshirt->id) }}" class="group cursor-pointer flex flex-col h-full">
-                    <div class="relative bg-[#EBEDEE] aspect-[3/5] overflow-hidden">
-                        <img src="{{ asset('storage/tshirt_images/' . $tshirt->image_url) }}" alt="{{ $tshirt->name }}"
-                            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
-                    </div>
-
-                    <div class="pt-4 flex flex-col">
-                        <h1 class="text-sm font-bold text-gray-800 truncate">{{ $tshirt->name }}</h1>
-
-                        @if($tshirt->description)
-                            <p class="text-xs text-gray-500 mt-1 line-clamp-2">{{ $tshirt->description }}</p>
-                        @endif
-
-                        <div class="mt-3 flex items-center justify-between">
-                            <span class="text-sm font-bold text-gray-900">
-                                € {{ number_format($priceConfig->unit_price_catalog, 2, ',', '') }}
-                            </span>
-                            <button class="text-gray-400 hover:text-black transition" title="Adicionar ao Carrinho">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                                </svg>
-                            </button>
+    <main id="catalog-container" class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+        
+        @if($tshirts->isEmpty())
+            <div class="py-20 text-center">
+                <p class="text-gray-500 text-lg">Não encontrámos nenhuma estampa com estes filtros.</p>
+                <a href="{{ route('catalog.index') }}" class="inline-block mt-4 font-bold text-black border-b border-black hover:text-gray-600 hover:border-gray-600 transition">Ver todo o catálogo</a>
+            </div>
+        @else
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                @foreach ($tshirts as $tshirt)
+                    <a href="{{ route('catalog.show', $tshirt->id) }}" class="group cursor-pointer flex flex-col h-full">
+                        <div class="relative bg-[#EBEDEE] aspect-[3/5] overflow-hidden">
+                            @if($tshirt->image_url && file_exists(public_path('storage/tshirt_images/' . $tshirt->image_url)))
+                                <img src="{{ asset('storage/tshirt_images/' . $tshirt->image_url) }}" alt="{{ $tshirt->name }}"
+                                    class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs uppercase tracking-widest font-bold">Sem Imagem</div>
+                            @endif
                         </div>
-                    </div>
-                </a>
-            @endforeach
-        </div>
+
+                        <div class="pt-4 flex flex-col">
+                            <h1 class="text-sm font-bold text-gray-800 truncate">{{ $tshirt->name }}</h1>
+
+                            @if($tshirt->description)
+                                <p class="text-xs text-gray-500 mt-1 line-clamp-2">{{ $tshirt->description }}</p>
+                            @endif
+
+                            <div class="mt-3 flex items-center justify-between">
+                                <span class="text-sm font-bold text-gray-900">
+                                    € {{ number_format($priceConfig->unit_price_catalog ?? 0, 2, ',', '') }}
+                                </span>
+                                <button class="text-gray-400 hover:text-black transition" title="Adicionar ao Carrinho">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        @endif
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const searchForm = document.getElementById('catalog-form');
+            const catalogContainer = document.getElementById('catalog-container');
+            const catalogCount = document.getElementById('catalog-count');
+
+            let debounceTimer;
+
+            searchInput.addEventListener('input', function() {
+                // Limpa o timer anterior (caso o utilizador escreva rápido)
+                clearTimeout(debounceTimer);
+                
+                // Espera 400ms após o utilizador parar de escrever
+                debounceTimer = setTimeout(() => {
+                    
+                    // Constrói o URL com os dados do formulário
+                    const formData = new FormData(searchForm);
+                    const queryString = new URLSearchParams(formData).toString();
+                    const url = `${searchForm.action}?${queryString}`;
+
+                    // Atualiza a barra de endereço sem recarregar a página (permite partilhar o link)
+                    window.history.pushState({}, '', url);
+
+                    // Faz o pedido ao servidor em background
+                    fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                        .then(response => response.text())
+                        .then(html => {
+                            // Extrai apenas a grelha e a contagem da resposta do servidor
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            
+                            // Atualiza a contagem no título
+                            const newCount = doc.getElementById('catalog-count');
+                            if (newCount) catalogCount.innerHTML = newCount.innerHTML;
+
+                            // Atualiza a grelha de produtos
+                            const newContainer = doc.getElementById('catalog-container');
+                            if (newContainer) catalogContainer.innerHTML = newContainer.innerHTML;
+                        })
+                        .catch(error => console.error('Erro ao atualizar catálogo:', error));
+
+                }, 400); 
+            });
+        });
+    </script>
 @endsection

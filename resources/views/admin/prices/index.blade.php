@@ -29,22 +29,38 @@
                     @method('PUT')
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        @php
+                            // O nosso dicionário de traduções
+                            $translations = [
+                                'unit_price_catalog' => 'Preço Base (Catálogo)',
+                                'unit_price_own' => 'Preço Base (Estampa Própria)',
+                                'unit_price_catalog_discount' => 'Preço com Desconto (Catálogo)',
+                                'unit_price_own_discount' => 'Preço com Desconto (Estampa Própria)',
+                                'qty_discount' => 'Quantidade para Desconto',
+                                // Se tiveres mais colunas, como o custom, podes adicioná-las aqui:
+                                'custom' => 'Valor Personalizado'
+                            ];
+                        @endphp
+
                         {{-- Magia Dinâmica: Lê todas as colunas da BD exceto o ID --}}
                         @foreach($price->getAttributes() as $key => $value)
                             @if($key !== 'id')
                                 <div>
-                                    <x-input-label for="{{ $key }}" :value="ucwords(str_replace('_', ' ', $key))" />
+                                    {{-- Verifica se a chave existe no dicionário, se não existir, usa o teu ucwords padrão --}}
+                                    <x-input-label for="{{ $key }}" 
+                                        :value="$translations[$key] ?? ucwords(str_replace('_', ' ', $key))" 
+                                        class="font-bold text-gray-700" />
 
                                     <div class="relative mt-1 shadow-sm rounded-md">
-                                        {{-- Só mostra o símbolo do Euro se o nome da coluna contiver a palavra 'price' --}}
-                                        @if(str_contains($key, 'price'))
+                                        {{-- Só mostra o símbolo do Euro se o nome da coluna contiver a palavra 'price' ou 'discount' (ajusta se quiseres que apareça no custom) --}}
+                                        @if(str_contains($key, 'price') || str_contains($key, 'custom'))
                                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                 <span class="text-gray-500 sm:text-sm">€</span>
                                             </div>
                                         @endif
 
                                         <input type="number" step="0.01" name="{{ $key }}" id="{{ $key }}" value="{{ $value }}"
-                                            class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md sm:text-sm transition-colors @if(str_contains($key, 'price')) pl-7 @endif"
+                                            class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md sm:text-sm transition-colors @if(str_contains($key, 'price') || str_contains($key, 'custom')) pl-7 @endif"
                                             required>
                                     </div>
                                 </div>

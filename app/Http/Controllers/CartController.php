@@ -60,20 +60,32 @@ class CartController extends Controller
 
     public function index()
     {
-       if (auth()->user() && auth()->user()->user_type === 'A') {
-            // Mantém o admin na página onde estava e avisa-o do bloqueio
-            return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
+        if (auth()->user() && auth()->user()->user_type === 'A') {
+            return back()->with('error', 'Os administradores não podem realizar compras.');
         }
 
         $cart = session()->get('cart', []);
+        $priceConfig = Price::first();
         $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['unit_price'] * $item['quantity'];
+
+        // No CartController.php, dentro do método index():
+        foreach ($cart as $key => $item) {
+            $cart[$key]['original_price'] = $priceConfig->unit_price_catalog;
+            
+            if ($item['quantity'] >= $priceConfig->qty_discount) {
+                $cart[$key]['unit_price'] = $priceConfig->unit_price_catalog_discount;
+                $cart[$key]['has_discount'] = true;
+            } else {
+                $cart[$key]['unit_price'] = $priceConfig->unit_price_catalog;
+                $cart[$key]['has_discount'] = false;
+            }
+            
+            $total += $cart[$key]['unit_price'] * $item['quantity'];
         }
 
-        // Busca todas as cores da base de dados
-        $colors = \App\Models\Color::all(); 
+        session()->put('cart', $cart);
 
+        $colors = \App\Models\Color::all();
         return view('cart.index', compact('cart', 'total', 'colors'));
     }
 
@@ -125,7 +137,7 @@ class CartController extends Controller
             $itemData['quantity'] = $request->quantity;
             $itemData['size'] = $request->size;
             $itemData['color_code'] = strtolower($request->color_code);
-            
+
             unset($cart[$key]);
             $cart[$newKey] = $itemData;
         } else {
