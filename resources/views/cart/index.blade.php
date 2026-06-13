@@ -25,58 +25,62 @@
                 <div class="lg:col-span-8">
                     <div class="border-t border-gray-200">
                         @foreach($cart as $key => $item)
-                            <div class="flex py-6 border-b border-gray-200">
-                                <div class="h-32 w-24 flex-shrink-0 bg-[#EBEDEE] relative aspect-[4/5] overflow-hidden">
+                            <div class="flex items-start py-6 border-b border-gray-200">
+    
+                                <div class="h-32 w-24 flex-shrink-0 bg-[#EBEDEE] relative aspect-[3/5] overflow-hidden rounded">
                                     <img src="{{ asset('storage/tshirt_images/' . $item['image_url']) }}"
                                         alt="{{ $item['name'] }}" class="h-full w-full object-cover object-center">
                                 </div>
 
-                                <div class="ml-6 flex flex-1 flex-col justify-between">
+                                <div class="ml-6 flex flex-1 flex-col justify-between min-h-[128px]">
+                                    
                                     <div>
                                         <div class="flex justify-between text-base font-bold text-gray-900">
-                                            <h3 class="uppercase">{{ $item['name'] }}</h3>
-                                            <p class="ml-4">€
-                                                {{ number_format($item['unit_price'] * $item['quantity'], 2, ',', '') }}
+                                            <h3 class="uppercase tracking-wide">{{ $item['name'] }}</h3>
+                                            <p class="ml-4 font-extrabold text-gray-900">
+                                                €{{ number_format($item['unit_price'] * $item['quantity'], 2, ',', '') }}
                                             </p>
                                         </div>
+                                        
                                         <p class="mt-1 text-sm text-gray-500 uppercase font-medium tracking-wide">
                                             Tamanho: <span class="text-gray-900 font-bold">{{ $item['size'] }}</span> | 
-                                            Cor: <span class="text-gray-900 font-bold">{{ $item['color_code'] }}</span>
+                                            Cor: <span class="text-gray-900 font-bold">{{ $item['color_name']}}</span>
                                         </p>
                                     </div>
                                     
-                                    <div class="flex flex-1 items-end justify-between text-sm">
-                                        <div class="flex items-center space-x-2">
-                                            <label for="quantity-{{ $key }}" class="text-gray-500 font-bold uppercase text-xs tracking-wider">Qtd:</label>
-                                                @foreach($cart as $key => $item)
-                                                <form action="{{ route('cart.update', $key) }}" method="POST">
-                                                    @csrf
-                                                    @method('PUT')
+                                    <div class="flex items-center justify-between text-sm mt-4">
+                                        
+                                        <div class="flex items-center space-x-2">  
+                                            <form action="{{ route('cart.update', $key) }}" method="POST" class="flex items-center space-x-2">
+                                                @csrf
+                                                @method('PUT')
 
-                                                    <select name="size" onchange="this.form.submit()">
-                                                        @foreach(['XS', 'S', 'M', 'L', 'XL'] as $s)
-                                                            <option value="{{ $s }}" {{ $item['size'] == $s ? 'selected' : '' }}>{{ $s }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                <select name="size" onchange="this.form.submit()" class="text-xs border    w-10 border-gray-300 rounded p-1 bg-white focus:ring-1 focus:ring-black focus:outline-none font-medium">
+                                                    @foreach(['XS', 'S', 'M', 'L', 'XL'] as $s)
+                                                        <option value="{{ $s }}" {{ $item['size'] == $s ? 'selected' : '' }}>{{ $s }}</option>
+                                                    @endforeach
+                                                </select>
 
-                                                    <select name="color_code" onchange="this.form.submit()">
-                                                        @foreach($colors as $color)
-                                                            <option value="{{ $color->code }}" {{ $item['color_code'] == $color->code ? 'selected' : '' }}>
-                                                                {{ $color->name }} </option>
-                                                        @endforeach
-                                                    </select>
+                                                <select name="color_code" onchange="this.form.submit()" class="text-xs border border-gray-300 rounded p-1 bg-white focus:ring-1 focus:ring-black focus:outline-none font-medium">
+                                                    @foreach($colors as $color)
+                                                        <option value="{{ $color->code }}" {{ $item['color_code'] == $color->code ? 'selected' : ' ' }}>
+                                                            {{ $color->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
 
-                                                    <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="0" onchange="this.form.submit()">
-                                                </form>
-                                            @endforeach
+                                                <label for="quantity-{{ $key }}" class="text-gray-500 font-bold uppercase text-xs tracking-wider">Qtd:</label>
+                                          
+                                                <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="0" onchange="this.form.submit()" 
+                                                    class="w-12 text-xs border border-gray-300 rounded p-1 text-center focus:ring-1 focus:ring-black focus:outline-none font-bold">
+                                            </form>
                                         </div>
 
-                                        <div class="flex">
+                                        <div class="flex items-center pl-4">
                                             <form action="{{ route('cart.destroy', $key) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-gray-400 hover:text-red-600 transition"
-                                                    title="Remover Produto">
+                                                <button type="submit" class="text-gray-400 hover:text-red-600 transition p-1" title="Remover Produto">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -85,6 +89,7 @@
                                                 </button>
                                             </form>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -97,23 +102,23 @@
 
                     <div class="flow-root">
                         <dl class="-my-4 text-sm text-gray-600">
-    <div class="flex items-center justify-between py-4">
-        <dt class="uppercase text-xs font-bold tracking-wider">Subtotal</dt>
-        <dd class="font-bold text-gray-900">€ {{ number_format($subtotal, 2, ',', '.') }}</dd>
-    </div>
+                            <div class="flex items-center justify-between py-4">
+                                <dt class="uppercase text-xs font-bold tracking-wider">Subtotal</dt>
+                                <dd class="font-bold text-gray-900">€ {{ number_format($subtotal, 2, ',', '.') }}</dd>
+                            </div>
 
-    @if($descontoAplicado > 0)
-        <div class="flex items-center justify-between py-4 border-t border-gray-200 text-green-600">
-            <dt class="uppercase text-xs font-bold tracking-wider">Desconto</dt>
-            <dd class="font-bold">- € {{ number_format($descontoAplicado, 2, ',', '.') }}</dd>
-        </div>
-    @endif
+                            @if($descontoAplicado > 0)
+                                <div class="flex items-center justify-between py-4 border-t border-gray-200 text-green-600">
+                                    <dt class="uppercase text-xs font-bold tracking-wider">Desconto</dt>
+                                    <dd class="font-bold">- € {{ number_format($descontoAplicado, 2, ',', '.') }}</dd>
+                                </div>
+                            @endif
 
-    <div class="flex items-center justify-between py-4 border-t border-gray-200 text-lg font-black text-gray-900">
-        <dt class="uppercase">Total Estimado</dt>
-        <dd>€ {{ number_format($totalFinal, 2, ',', '.') }}</dd>
-    </div>
-</dl>
+                            <div class="flex items-center justify-between py-4 border-t border-gray-200 text-lg font-black text-gray-900">
+                                <dt class="uppercase">Total Estimado</dt>
+                                <dd>€ {{ number_format($totalFinal, 2, ',', '.') }}</dd>
+                            </div>
+                        </dl>
                     </div>
 
                     <a href="{{ route('checkout.index') }}"

@@ -58,7 +58,7 @@
                                     <p class="text-xs text-gray-500 mt-0.5">
                                         Tamanho: <span
                                             class="font-semibold text-gray-700 uppercase">{{ $item->size }}</span> |
-                                        Cor: <span class="font-semibold text-gray-700">#{{ $item->color_code }}</span>
+                                        Cor: <span class="font-semibold text-gray-700">{{ $item->color_code }}</span>
                                     </p>
                                 </div>
                                 <div class="text-right">
