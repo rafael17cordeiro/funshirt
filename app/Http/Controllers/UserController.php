@@ -9,9 +9,6 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    // ==========================================
-    // 1. CRUD DE COLABORADORES (Admins e Funcionários)
-    // ==========================================
 
     public function index()
     {
@@ -88,9 +85,7 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'Colaborador removido com sucesso!');
     }
 
-    // ==========================================
-    // 2. GESTÃO DE CLIENTES
-    // ==========================================
+
 
     public function clientsIndex()
     {

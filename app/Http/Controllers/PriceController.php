@@ -12,9 +12,9 @@ class PriceController extends Controller
      */
     public function index()
     {
-        // Vai buscar a primeira (e única) linha de configuração de preços
+
         $price = Price::firstOrFail();
-        
+
         return view('admin.prices.index', compact('price'));
     }
 
@@ -24,9 +24,8 @@ class PriceController extends Controller
     public function update(Request $request)
     {
         $price = Price::firstOrFail();
-        
-        // O fill() injeta todos os dados do formulário de uma vez.
-        // Como o teu modelo tem $guarded = [], isto é seguro e instantâneo!
+
+
         $price->fill($request->except(['_token', '_method']));
         $price->save();
 

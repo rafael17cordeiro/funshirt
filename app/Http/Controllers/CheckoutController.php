@@ -15,9 +15,9 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-        // SEGURANÇA: Bloquear administradores de acederem ao checkout
+
         if (auth()->user() && auth()->user()->user_type === 'A') {
-            // Mantém o admin na página onde estava e avisa-o do bloqueio
+
             return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
         }
 
@@ -45,7 +45,7 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         if (auth()->user() && auth()->user()->user_type === 'A') {
-            // Mantém o admin na página onde estava e avisa-o do bloqueio
+
             return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
         }
 
@@ -55,7 +55,7 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('error', 'O seu carrinho está vazio.');
         }
 
-        // 1. Validação dos Dados do Formulário
+
         $request->validate([
             'address' => 'required|string|max:255',
             'nif' => 'nullable|digits:9',
@@ -94,10 +94,10 @@ class CheckoutController extends Controller
             return back()->withInput()->with('error', 'Falha de comunicação com o banco simulado.');
         }
 
-        // 3. Gravação na Base de Dados com Transação Segura
+
         DB::beginTransaction();
         try {
-            // Criar Encomenda na tabela 'orders'
+
             $orderId = DB::table('orders')->insertGetId([
                 'customer_id' => auth()->user()->id,
                 'status' => 'pending',
@@ -111,12 +111,9 @@ class CheckoutController extends Controller
                 'receipt_url' => null,
             ]);
 
-            // Inserir os Itens da Encomenda (order_items)
             foreach ($cart as $item) {
                 $codigoCor = strtolower($item['color_code']);
 
-                // TRUQUE DE SEGURANÇA: Se o código for '000000' ou 'ffffff' e não existir na BD,
-                // associamos a primeira cor disponível no teu banco para evitar que o SQLite mande o erro de Foreign Key.
                 $corExiste = DB::table('colors')->where('code', $codigoCor)->exists();
                 if (!$corExiste) {
                     $primeiraCorDisponivel = DB::table('colors')->value('code');
@@ -134,28 +131,26 @@ class CheckoutController extends Controller
                 ]);
             }
 
-            // 3. GERAÇÃO DO PDF
-            // Carrega o objeto do modelo Eloquent com as relações
+
             $orderObject = \App\Models\Order::with(['customer.user', 'items'])->find($orderId);
 
             $filename = 'receipt_' . $orderId . '.pdf';
 
-            // Carrega a view que me enviaste (receipt.blade.php)
+
             $pdf = Pdf::loadView('order.receipt', ['order' => $orderObject]);
 
             Storage::disk('local')->put('pdf_receipts/' . $filename, $pdf->output());
 
-            // Atualiza o nome do PDF na tabela de encomendas
+
             DB::table('orders')->where('id', $orderId)->update([
                 'receipt_url' => $filename
             ]);
 
-            // Confirma tudo no banco de dados
             DB::commit();
 
             Mail::to(auth()->user()->email)->send(new OrderReceiptMail($orderObject, $filename));
 
-            // Limpar o Carrinho da Sessão
+
             session()->forget('cart');
 
             return redirect()->route('catalog.index')

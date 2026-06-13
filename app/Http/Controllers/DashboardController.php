@@ -11,14 +11,14 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // 1. Se for Cliente, redireciona para a página das suas próprias encomendas
+
         if (auth()->user()->user_type === 'C') {
             return redirect()->route('customer.orders.index');
         }
 
         $hoje = \Carbon\Carbon::now();
 
-        // 1. KPIs (Cards de Topo)
+
         $kpis = [
             'total_revenue' => Order::where('status', 'closed')->sum('total_price'),
             'monthly_revenue' => Order::where('status', 'closed')
@@ -29,7 +29,7 @@ class DashboardController extends Controller
             'pending_orders' => Order::where('status', 'pending')->count(),
         ];
 
-        // 2. Gráfico de Linhas (Faturação dos últimos 6 meses)
+
         $chartMonths = [];
         $chartRevenue = [];
 
@@ -45,7 +45,7 @@ class DashboardController extends Controller
             $chartRevenue[] = round($receitaMes, 2);
         }
 
-        // 3. Gráfico Circular (Estados das Encomendas)
+
         $orderStats = [
             'pending' => Order::where('status', 'pending')->count(),
             'paid' => Order::where('status', 'paid')->count(),
@@ -53,15 +53,14 @@ class DashboardController extends Controller
             'canceled' => Order::where('status', 'canceled')->count(),
         ];
 
-        // 4. Últimas 5 encomendas (Apenas Pendentes/Pagas)
+
         $recentPendingOrders = Order::with('customer.user')
             ->whereIn('status', ['pending', 'paid'])
             ->orderBy('date', 'desc')
             ->take(5)
             ->get();
 
-        // 5. NOVA CONSULTA: Top 3 Melhores Clientes (Maiores Compradores)
-        // Agrupa por cliente, soma o total_price de encomendas fechadas/pagas e ordena do maior para o menor
+
         $topCustomers = Order::whereIn('orders.status', ['closed', 'paid'])
             ->join('customers', 'orders.customer_id', '=', 'customers.id')
             ->join('users', 'customers.id', '=', 'users.id')

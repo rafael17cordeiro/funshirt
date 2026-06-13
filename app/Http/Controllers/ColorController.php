@@ -31,9 +31,9 @@ class ColorController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'code' => 'required|string|max:20|unique:colors,code', // O código tem de ser único
+            'code' => 'required|string|max:20|unique:colors,code',
             'name' => 'required|string|max:255',
-            'file_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048', // Obrigatório ter a imagem base
+            'file_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $color = new Color();
@@ -41,11 +41,10 @@ class ColorController extends Controller
         $color->name = $validated['name'];
         $color->save();
 
-        // Faz o upload da t-shirt base
+
         if ($request->hasFile('file_image')) {
             $file = $request->file('file_image');
-            // O nome do ficheiro tem de coincidir com o código da cor (mantendo a extensão)
-            // Ex: se o code for "white", fica "white.jpg"
+
             $filename = str_replace('#', '', $color->code) . '.' . $file->getClientOriginalExtension();
             $file->storeAs('tshirt_base', $filename, 'public');
         }
@@ -67,7 +66,7 @@ class ColorController extends Controller
      */
     public function update(Request $request, Color $color)
     {
-        // Nota: Por norma não se altera a Primary Key (code), por isso validamos apenas o nome e a imagem
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'file_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -79,8 +78,8 @@ class ColorController extends Controller
         if ($request->hasFile('file_image')) {
             $file = $request->file('file_image');
             $filename = str_replace('#', '', $color->code) . '.' . $file->getClientOriginalExtension();
-            
-            // Grava a nova imagem substituindo a antiga (o storeAs faz overwrite automático se o nome for igual)
+
+
             $file->storeAs('tshirt_base', $filename, 'public');
         }
 

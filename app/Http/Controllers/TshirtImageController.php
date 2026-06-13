@@ -11,14 +11,14 @@ class TshirtImageController extends Controller
 {
     public function index()
     {
-        // Vai buscar as imagens e, ao mesmo tempo, traz a categoria de cada uma para não sobrecarregar a BD
+
         $images = TshirtImage::with('category')->latest()->get();
         return view('admin.tshirt_images.index', compact('images'));
     }
 
     public function create()
     {
-        // Precisamos de enviar as categorias para preencher o <select> (dropdown) no formulário
+
         $categories = Category::all();
         return view('admin.tshirt_images.create', compact('categories'));
     }
@@ -36,14 +36,14 @@ class TshirtImageController extends Controller
         $tshirtImage->name = $validated['name'];
         $tshirtImage->description = $validated['description'] ?? null;
         $tshirtImage->category_id = $validated['category_id'];
-        
-        // Faz o upload da estampa para a pasta 'tshirt_images'
+
+
         if ($request->hasFile('file_image')) {
-            // O Laravel gera automaticamente um nome único e seguro para o ficheiro
+
             $path = $request->file('file_image')->store('tshirt_images', 'public');
-            
-            // O nome do ficheiro (ex: file.jpg) é a última parte do caminho gerado
-            $tshirtImage->image_url = basename($path); 
+
+
+            $tshirtImage->image_url = basename($path);
         }
 
         $tshirtImage->save();
@@ -71,14 +71,14 @@ class TshirtImageController extends Controller
         $tshirtImage->description = $validated['description'] ?? null;
         $tshirtImage->category_id = $validated['category_id'];
 
-        // Se o administrador submeter uma imagem nova, apagamos a antiga e guardamos a nova
+
         if ($request->hasFile('file_image')) {
-            // Apaga a imagem antiga do disco (se existir)
+
             if ($tshirtImage->image_url) {
                 Storage::disk('public')->delete('tshirt_images/' . $tshirtImage->image_url);
             }
 
-            // Grava a nova
+
             $path = $request->file('file_image')->store('tshirt_images', 'public');
             $tshirtImage->image_url = basename($path);
         }
@@ -92,7 +92,7 @@ class TshirtImageController extends Controller
     public function destroy(TshirtImage $tshirtImage)
     {
         $tshirtImage->delete(); // Soft delete entra em ação!
-        
+
         return redirect()->route('admin.tshirt_images.index')
             ->with('success', 'Imagem removida do catálogo com sucesso!');
     }

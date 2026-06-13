@@ -12,7 +12,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
         if (auth()->user() && auth()->user()->user_type === 'A') {
-            // Mantém o admin na página onde estava e avisa-o do bloqueio
+
             return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
         }
 
@@ -33,7 +33,7 @@ class CartController extends Controller
 
         $validColors = Color::pluck('code')->toArray();
 
-        // Quando o utilizador escolhe uma cor:
+
         if (!in_array(strtolower($request->color_code), $validColors)) {
             return back()->with('error', 'Cor inválida!');
         }
@@ -47,7 +47,7 @@ class CartController extends Controller
                 'image_url' => $tshirt->image_url,
                 'size' => $request->size,
                 'color_code' => strtolower($request->color_code),
-                'color_name' => strtolower( Color::getNameByCode( $request->color_code ) ),
+                'color_name' => strtolower(Color::getNameByCode($request->color_code)),
                 'quantity' => $request->quantity,
                 'unit_price' => $priceConfig->unit_price_catalog,
             ];
@@ -68,19 +68,18 @@ class CartController extends Controller
         $priceConfig = Price::first();
         $subtotal = 0;
 
-        // Calcular subtotal normal (sem descontos por item)
+
         foreach ($cart as $item) {
             $subtotal += $item['unit_price'] * $item['quantity'];
         }
 
-        // Lógica do Desconto Global: 
-        // Se a quantidade total de itens no carrinho for >= qty_discount, aplica desconto
+
         $totalQty = array_sum(array_column($cart, 'quantity'));
         $totalFinal = $subtotal;
         $descontoAplicado = 0;
 
         if ($totalQty >= $priceConfig->qty_discount) {
-            // Exemplo: desconta a diferença entre o preço normal e o de desconto
+
             $descontoAplicado = ($priceConfig->unit_price_catalog - $priceConfig->unit_price_catalog_discount) * $totalQty;
             $totalFinal = $subtotal - $descontoAplicado;
         }
@@ -111,12 +110,12 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        // 1. Verifica se o item existe no carrinho
+
         if (!isset($cart[$key])) {
             return back()->with('error', 'Item não encontrado.');
         }
 
-        // 2. Se qtd for 0, remove
+
         if ($request->quantity <= 0) {
             unset($cart[$key]);
             session()->put('cart', $cart);
@@ -131,36 +130,36 @@ class CartController extends Controller
         $newSize = $request->input('size', $cart[$key]['size']);
         $newColor = strtolower($request->input('color_code', $cart[$key]['color_code']));
         $newQuantity = $request->input('quantity', $cart[$key]['quantity']);
-        $productId = $cart[$key]['tshirt_image_id']; 
+        $productId = $cart[$key]['tshirt_image_id'];
 
-        // O TRUQUE: Gerar a nova chave correta para onde este produto vai residir
+
         $newCartKey = $productId . '_' . $newColor . '_' . $newSize;
 
-        // Guardamos temporariamente os dados antigos do produto antes de limpar a chave
+
         $oldItemData = $cart[$key];
 
-        // Removemos a chave antiga para evitar resíduos e duplicados
+
         unset($cart[$key]);
 
-        // 3. FUSÃO INTELIGENTE: Verificar se a nova chave já existe no carrinho
+
         if (isset($cart[$newCartKey])) {
-            // Se já existe um produto com essa cor e tamanho, SOMAMOS a quantidade
+
             $cart[$newCartKey]['quantity'] += $newQuantity;
         } else {
-            // Se for um item de combinação única, criamos/atualizamos na nova chave certa
+
             $cart[$newCartKey] = [
                 'tshirt_image_id' => $productId,
-                'name'            => $oldItemData['name'],
-                'image_url'       => $oldItemData['image_url'],
-                'size'            => $newSize,
-                'color_code'      => $newColor,
-                'color_name'      => strtolower(Color::getNameByCode($newColor)),
-                'quantity'        => $newQuantity,
-                'unit_price'      => $oldItemData['unit_price'],
+                'name' => $oldItemData['name'],
+                'image_url' => $oldItemData['image_url'],
+                'size' => $newSize,
+                'color_code' => $newColor,
+                'color_name' => strtolower(Color::getNameByCode($newColor)),
+                'quantity' => $newQuantity,
+                'unit_price' => $oldItemData['unit_price'],
             ];
         }
 
-        // Gravar o estado limpo e perfeito na sessão
+
         session()->put('cart', $cart);
         return redirect()->route('cart.index')->with('success', 'Carrinho atualizado com sucesso.');
     }

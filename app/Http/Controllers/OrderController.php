@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
-    // ==========================================
-    // ÁREA DE CLIENTES
-    // ==========================================
 
     public function myOrders()
     {
@@ -44,13 +41,11 @@ class OrderController extends Controller
         ]);
     }
 
-    // ==========================================
-    // BACKOFFICE (ADMIN / FUNCIONÁRIOS)
-    // ==========================================
+
 
     public function index()
     {
-        // O Eloquent (Modelo) vai buscar as encomendas e junta automaticamente os dados do cliente
+
         $orders = Order::with('customer.user')
             ->orderBy('date', 'desc')
             ->paginate(15);
