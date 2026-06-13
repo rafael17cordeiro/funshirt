@@ -4,9 +4,13 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Detalhes da Encomenda #' . str_pad($order->id, 5, '0', STR_PAD_LEFT)) }}
             </h2>
-            <a href="{{ route('customer.orders.index') }}" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded transition shadow-sm">
-                ← Voltar ao Histórico
-            </a>
+            
+            <div class="flex items-center space-x-3">
+                <a href="{{ route('customer.orders.index') }}" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded transition shadow-sm">
+                    ← Voltar ao Histórico
+                </a>
+            </div>
+
         </div>
     </x-slot>
 
@@ -68,13 +72,24 @@
                         <p class="text-sm text-gray-800"><span class="text-gray-400">NIF:</span> {{ $order->nif ?? 'Consumidor Final' }}</p>
                         <p class="text-sm text-gray-800 mt-1"><span class="text-gray-400">Ref. Transação:</span> {{ $order->payment_ref }}</p>
                     </div>
+                    <div class="flex items-center space-x-3">
+                        @if(!empty($order->receipt_url))
+                            <a href="{{ route('customer.orders.receipt', $order->id) }}" 
+                            class="inline-flex items-center text-sm bg-gray-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                                Baixar recibo
+                            </a>
+                        @endif
+                    </div>
                 </div>
 
                 <div class="flex justify-between items-center pt-4 border-t border-gray-200 font-bold text-gray-900">
                     <span class="text-sm uppercase tracking-wider text-gray-500">Total Final da Encomenda:</span>
                     <span class="text-2xl font-black text-indigo-600">{{ number_format($order->total_price, 2, ',', ' ') }} €</span>
                 </div>
-
+                
             </div>
         </div>
     </div>

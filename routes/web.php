@@ -28,14 +28,10 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'role:C,A'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); 
 });
 
-// Listagem (aponta para a página que já tens criada)
-Route::get('/encomendas', [OrderController::class, 'myOrders'])->name('customer.orders.index');
 
-// Detalhes da encomenda
-Route::get('/encomendas/{id}', [OrderController::class, 'showOrder'])->name('customer.orders.show');
 
 // REQUISITO G4: Rotas do Checkout Protegida
 Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->middleware(['auth'])->name('checkout.index');
@@ -51,6 +47,8 @@ Route::patch('/admin/orders/{order}/status', [OrderController::class, 'updateSta
 
 // Rota para o Cliente ver as suas próprias encomendas
 Route::get('/minhas-encomendas', [\App\Http\Controllers\OrderController::class, 'myOrders'])->name('customer.orders.index');
+Route::get('/encomendas/{id}', [OrderController::class, 'showOrder'])->middleware('auth')->name('customer.orders.show');
+Route::get('/orders/{id}/receipt', [App\Http\Controllers\OrderController::class, 'downloadReceipt'])->name('customer.orders.receipt');
 
 Route::patch('/admin/users/{id}/block', [UserController::class, 'toggleBlock'])->name('admin.users.block');
 

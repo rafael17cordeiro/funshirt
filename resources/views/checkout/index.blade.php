@@ -62,28 +62,29 @@
                             style="width: 100%; padding: 12px; border: 1px solid #D1D5DB; border-radius: 4px; background-color: #F9FAFB;"
                             class="block w-full rounded border border-gray-300 font-bold text-sm text-gray-900 focus:border-black focus:ring-1 focus:ring-black cursor-pointer">
                             <option value="VISA" {{ (old('payment_type', $customer->default_payment_type ?? '') == 'VISA') ? 'selected' : '' }}>Visa</option>
-                            <option value="MC" {{ (old('payment_type', $customer->default_payment_type ?? '') == 'MC') ? 'selected' : '' }}>Mastercard</option>
+                            <option value="MBWAY" {{ (old('payment_type', $customer->default_payment_type ?? '') == 'MBWAY') ? 'selected' : '' }}>MB Way</option>
                             <option value="PAYPAL" {{ (old('payment_type', $customer->default_payment_type ?? '') == 'PAYPAL') ? 'selected' : '' }}>PayPal</option>
                         </select>
                     </div>
 
                     <div class="mb-6">
-                        <label for="payment_ref" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                            Ref. Pagamento / Nº Cartão / Email PayPal *
+                        <label id="payment_label" for="payment_ref" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                            Nº Cartão
                         </label>
                         <input type="text" id="payment_ref" name="payment_ref" 
                             value="{{ old('payment_ref', $customer->default_payment_ref ?? '') }}" required
                             style="width: 100%; padding: 12px; border: 1px solid #D1D5DB; border-radius: 4px; background-color: #F9FAFB;"
                             class="block w-full rounded border border-gray-300 font-medium text-sm text-gray-900 focus:border-black focus:ring-1 focus:ring-black"
-                            placeholder="Ex: 4000 1234 5678 9010 ou email@paypal.com">
+                            placeholder="Ex: 4000 1234 5678 9010">
                     </div>
 
-                    <div class="pt-4">
-                        <button type="submit" 
-                            class="block w-full text-center bg-black text-white font-black uppercase tracking-widest text-sm py-4 hover:bg-gray-800 transition duration-300 shadow rounded">
-                            Proceder para o Pagamento Simulado
+                    <form action="{{ route('checkout.store') }}" method="POST" x-data="{ submetendo: false }" @submit="submetendo = true">
+                        @csrf
+                        <button type="submit" ::disabled="submetendo" class="w-full bg-black text-white p-3 uppercase font-bold text-sm tracking-wider hover:bg-gray-800 transition disabled:opacity-50">
+                            <span x-show="!submetendo">Finalizar Pagamento *</span>
+                            <span x-show="submetendo">A processar pagamento...</span>
                         </button>
-                    </div>
+                    </form>
                 </form>
             </div>
 
@@ -120,4 +121,36 @@
 
         </div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const paymentTypeSelect = document.getElementById('payment_type');
+            const paymentLabel = document.getElementById('payment_label');
+            const paymentRefInput = document.getElementById('payment_ref');
+
+            function updatePaymentFields() {
+                const selectedMethod = paymentTypeSelect.value;
+
+                if (selectedMethod === 'VISA') {
+                    paymentLabel.innerText = 'Número do Cartão';
+                    paymentRefInput.placeholder = 'Ex: 4000 1234 5678 9010';
+                    paymentRefInput.type = 'text';
+                } else if (selectedMethod === 'MBWAY') {
+                    paymentLabel.innerText = 'Número de Telemóvel MBWay';
+                    paymentRefInput.placeholder = 'Ex: 912345678';
+                    paymentRefInput.type = 'text';
+                } else if (selectedMethod === 'PAYPAL') {
+                    paymentLabel.innerText = 'Email PayPal';
+                    paymentRefInput.placeholder = 'Ex: exemplo@paypal.com';
+                    paymentRefInput.type = 'email';
+                }
+            }
+
+            // Executa imediatamente ao carregar para caso já venha algo selecionado do banco/old
+            updatePaymentFields();
+
+            // Ouve as alterações do dropdown
+            paymentTypeSelect.addEventListener('change', updatePaymentFields);
+        });
+    </script>
 @endsection
