@@ -1,4 +1,5 @@
-<aside class="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-slate-800 border-r border-slate-700">
+<aside class="flex flex-col w-64 h-screen px-4 py-8 bg-[#2d3748] border-r border-[#262e3d]">
+    <!-- Branding -->
     <div class="flex flex-col items-center justify-center mb-8">
         <a href="{{ route('dashboard') }}" class="mb-3">
             <span class="text-3xl font-black text-white tracking-widest">FUNSHIRT</span>
@@ -6,8 +7,8 @@
 
         @if(auth()->user()->user_type === 'A')
             <span
-                class="px-3 py-1 text-[10px] font-bold tracking-widest text-indigo-200 uppercase bg-indigo-900/50 border border-indigo-700 rounded-full">
-                Painel Administrativo
+                class="px-3 py-1 text-[10px] font-bold tracking-widest text-blue-200 uppercase bg-blue-900/50 border border-blue-700 rounded-full">
+                Painel Administrador
             </span>
         @elseif(auth()->user()->user_type === 'F')
             <span
@@ -17,11 +18,13 @@
         @endif
     </div>
 
+    <!-- Navegação (Menu principal a ocupar o topo e o botão no fundo) -->
     <div class="flex flex-col justify-between flex-1 mt-6">
-        <nav class="space-y-2">
 
+        <!-- PARTE SUPERIOR DA BARRA (Menus) -->
+        <nav class="space-y-2">
             <a href="{{ route('dashboard') }}"
-                class="flex items-center px-4 py-2.5 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('dashboard') ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:bg-slate-700 hover:text-white' }}">
+                class="flex items-center px-4 py-2.5 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('dashboard') ? 'bg-[#3b475a] text-white' : 'text-slate-300 hover:bg-[#3b475a] hover:text-white' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -32,7 +35,7 @@
 
             @if(auth()->user()->user_type === 'C')
                 <a href="{{ route('customer.orders.index') }}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('customer.orders.index') ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:bg-slate-700 hover:text-white' }}">
+                    class="flex items-center px-4 py-2.5 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('customer.orders.index') ? 'bg-[#3b475a] text-white' : 'text-slate-300 hover:bg-[#3b475a] hover:text-white' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -44,7 +47,7 @@
 
             @if(in_array(auth()->user()->user_type, ['A', 'F']))
                 <a href="{{ route('admin.orders.index') }}"
-                    class="flex items-center px-4 py-2.5 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('admin.orders.*') ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:bg-slate-700 hover:text-white' }}">
+                    class="flex items-center px-4 py-2.5 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('admin.orders.*') ? 'bg-[#3b475a] text-white' : 'text-slate-300 hover:bg-[#3b475a] hover:text-white' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -54,12 +57,13 @@
                 </a>
             @endif
 
-            <hr class="border-slate-700 my-4">
+            <hr class="border-[#3b475a] my-4">
 
             @if(auth()->user()->user_type === 'A')
-                <div x-data="{ open: true }">
+                <!-- Dropdown Utilizadores -->
+                <div x-data="{ open: {{ request()->routeIs('admin.clients.*', 'admin.users.*') ? 'true' : 'false' }} }">
                     <button @click="open = !open"
-                        class="flex items-center justify-between w-full px-4 py-2.5 text-sm font-medium text-slate-300 rounded-md hover:bg-slate-700 hover:text-white transition-colors">
+                        class="flex items-center justify-between w-full px-4 py-2.5 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('admin.clients.*', 'admin.users.*') ? 'bg-[#3b475a] text-white' : 'text-slate-300 hover:bg-[#3b475a] hover:text-white' }}">
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor" stroke-width="2">
@@ -76,19 +80,21 @@
 
                     <div x-show="open" x-transition.opacity class="pl-11 pr-4 py-1 space-y-1">
                         <a href="{{ route('admin.clients.index') }}"
-                            class="block py-1.5 text-sm {{ request()->routeIs('admin.clients.*') ? 'text-indigo-400 font-semibold' : 'text-slate-400 hover:text-white' }}">
+                            class="block py-1.5 text-sm {{ request()->routeIs('admin.clients.*') ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' }}">
                             Gestão de Clientes
                         </a>
                         <a href="{{ route('admin.users.index') }}"
-                            class="block py-1.5 text-sm {{ request()->routeIs('admin.users.*') ? 'text-indigo-400 font-semibold' : 'text-slate-400 hover:text-white' }}">
+                            class="block py-1.5 text-sm {{ request()->routeIs('admin.users.*') ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' }}">
                             Colaboradores
                         </a>
                     </div>
                 </div>
 
-                <div x-data="{ open: true }">
+                <!-- Dropdown Catálogo Loja -->
+                <div
+                    x-data="{ open: {{ request()->routeIs('admin.categories.*', 'admin.colors.*', 'admin.tshirt_images.*', 'admin.prices.*') ? 'true' : 'false' }} }">
                     <button @click="open = !open"
-                        class="flex items-center justify-between w-full px-4 py-2.5 text-sm font-medium text-slate-300 rounded-md hover:bg-slate-700 hover:text-white transition-colors">
+                        class="flex items-center justify-between w-full px-4 py-2.5 text-sm font-medium rounded-md transition-colors {{ request()->routeIs('admin.categories.*', 'admin.colors.*', 'admin.tshirt_images.*', 'admin.prices.*') ? 'bg-[#3b475a] text-white' : 'text-slate-300 hover:bg-[#3b475a] hover:text-white' }}">
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor" stroke-width="2">
@@ -105,25 +111,39 @@
 
                     <div x-show="open" x-transition.opacity class="pl-11 pr-4 py-1 space-y-1">
                         <a href="{{ route('admin.categories.index') }}"
-                            class="block py-1.5 text-sm {{ request()->routeIs('admin.categories.*') ? 'text-indigo-400 font-semibold' : 'text-slate-400 hover:text-white' }}">
+                            class="block py-1.5 text-sm {{ request()->routeIs('admin.categories.*') ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' }}">
                             Categorias
                         </a>
                         <a href="{{ route('admin.colors.index') }}"
-                            class="block py-1.5 text-sm {{ request()->routeIs('admin.colors.*') ? 'text-indigo-400 font-semibold' : 'text-slate-400 hover:text-white' }}">
+                            class="block py-1.5 text-sm {{ request()->routeIs('admin.colors.*') ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' }}">
                             Cores
                         </a>
                         <a href="{{ route('admin.tshirt_images.index') }}"
-                            class="block py-1.5 text-sm {{ request()->routeIs('admin.tshirt_images.*') ? 'text-indigo-400 font-semibold' : 'text-slate-400 hover:text-white' }}">
+                            class="block py-1.5 text-sm {{ request()->routeIs('admin.tshirt_images.*') ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' }}">
                             Estampas
                         </a>
                         <a href="{{ route('admin.prices.index') }}"
-                            class="block py-1.5 text-sm {{ request()->routeIs('admin.prices.*') ? 'text-indigo-400 font-semibold' : 'text-slate-400 hover:text-white' }}">
+                            class="block py-1.5 text-sm {{ request()->routeIs('admin.prices.*') ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' }}">
                             Definição de Preços
                         </a>
                     </div>
                 </div>
             @endif
-
         </nav>
+
+        <!-- PARTE INFERIOR DA BARRA (Botão Voltar) -->
+        <div class="mt-auto pt-4">
+            <hr class="border-[#3b475a] mb-4">
+            <a href="{{ route('catalog.index') }}"
+                class="flex items-center px-4 py-2.5 text-sm font-medium rounded-md transition-colors text-slate-300 hover:bg-[#3b475a] hover:text-white group">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5 mr-3 transform group-hover:-translate-x-1 transition-transform" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Voltar ao Catálogo
+            </a>
+        </div>
+
     </div>
 </aside>
