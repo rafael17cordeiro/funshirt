@@ -58,7 +58,7 @@
                     <tr>
                         <td>T-Shirt Manga Curta</td>
                         <td>{{ $item->size }}</td>
-                        <td>{{ $item->color_code }}</td>
+                        <td>{{ $item->color_name }}</td>
                         <td class="text-right">{{ $item->qty }}</td>
                         <td class="text-right">{{ number_format($item->unit_price, 2) }} €</td>
                         <td class="text-right">{{ number_format($item->sub_total, 2) }} €</td>

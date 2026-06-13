@@ -157,7 +157,7 @@ class CheckoutController extends Controller
 
             return redirect()->route('catalog.index')
                 ->with('payment_success', 'A tua encomenda foi registada com sucesso! O recibo foi gerado.')
-                ->with('new_order_id', $orderId); 
+                ->with('new_order_id', $orderId);
 
         } catch (\Exception $e) {
             DB::rollBack();

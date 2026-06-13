@@ -14,4 +14,11 @@ class Color extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $guarded = [];
+
+    public static function getNameByCode($code)
+    {
+        return self::where('code', strtolower($code))
+            ->value('name') ?? 'Cor desconhecida';
+    }
+
 }
