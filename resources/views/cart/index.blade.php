@@ -97,19 +97,23 @@
 
                     <div class="flow-root">
                         <dl class="-my-4 text-sm text-gray-600">
-                            <div class="flex items-center justify-between py-4">
-                                <dt class="uppercase text-xs font-bold tracking-wider">Subtotal</dt>
-                                <dd class="font-bold text-gray-900">€ {{ number_format($total, 2, ',', '') }}</dd>
-                            </div>
-                            <div class="flex items-center justify-between py-4 border-t border-gray-200">
-                                <dt class="uppercase text-xs font-bold tracking-wider">Portes</dt>
-                                <dd class="font-bold text-gray-900">Grátis</dd>
-                            </div>
-                            <div class="flex items-center justify-between py-4 border-t border-gray-200 text-lg font-black text-gray-900">
-                                <dt class="uppercase">Total Estimado</dt>
-                                <dd>€ {{ number_format($total, 2, ',', '') }}</dd>
-                            </div>
-                        </dl>
+    <div class="flex items-center justify-between py-4">
+        <dt class="uppercase text-xs font-bold tracking-wider">Subtotal</dt>
+        <dd class="font-bold text-gray-900">€ {{ number_format($subtotal, 2, ',', '.') }}</dd>
+    </div>
+
+    @if($descontoAplicado > 0)
+        <div class="flex items-center justify-between py-4 border-t border-gray-200 text-green-600">
+            <dt class="uppercase text-xs font-bold tracking-wider">Desconto</dt>
+            <dd class="font-bold">- € {{ number_format($descontoAplicado, 2, ',', '.') }}</dd>
+        </div>
+    @endif
+
+    <div class="flex items-center justify-between py-4 border-t border-gray-200 text-lg font-black text-gray-900">
+        <dt class="uppercase">Total Estimado</dt>
+        <dd>€ {{ number_format($totalFinal, 2, ',', '.') }}</dd>
+    </div>
+</dl>
                     </div>
 
                     <a href="{{ route('checkout.index') }}"

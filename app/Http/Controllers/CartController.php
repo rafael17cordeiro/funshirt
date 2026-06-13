@@ -68,25 +68,29 @@ class CartController extends Controller
         $priceConfig = Price::first();
         $total = 0;
 
-        // No CartController.php, dentro do método index():
-        foreach ($cart as $key => $item) {
-            $cart[$key]['original_price'] = $priceConfig->unit_price_catalog;
-            
-            if ($item['quantity'] >= $priceConfig->qty_discount) {
-                $cart[$key]['unit_price'] = $priceConfig->unit_price_catalog_discount;
-                $cart[$key]['has_discount'] = true;
-            } else {
-                $cart[$key]['unit_price'] = $priceConfig->unit_price_catalog;
-                $cart[$key]['has_discount'] = false;
-            }
-            
-            $total += $cart[$key]['unit_price'] * $item['quantity'];
-        }
+        $cart = session()->get('cart', []);
+    $priceConfig = Price::first();
+    $subtotal = 0;
 
-        session()->put('cart', $cart);
+    // Calcular subtotal normal (sem descontos por item)
+    foreach ($cart as $item) {
+        $subtotal += $item['unit_price'] * $item['quantity'];
+    }
 
-        $colors = \App\Models\Color::all();
-        return view('cart.index', compact('cart', 'total', 'colors'));
+    // Lógica do Desconto Global: 
+    // Se a quantidade total de itens no carrinho for >= qty_discount, aplica desconto
+    $totalQty = array_sum(array_column($cart, 'quantity'));
+    $totalFinal = $subtotal;
+    $descontoAplicado = 0;
+
+    if ($totalQty >= $priceConfig->qty_discount) {
+        // Exemplo: desconta a diferença entre o preço normal e o de desconto
+        $descontoAplicado = ($priceConfig->unit_price_catalog - $priceConfig->unit_price_catalog_discount) * $totalQty;
+        $totalFinal = $subtotal - $descontoAplicado;
+    }
+
+    $colors = \App\Models\Color::all();
+    return view('cart.index', compact('cart', 'subtotal', 'totalFinal', 'descontoAplicado', 'colors'));
     }
 
     public function destroy($key)
