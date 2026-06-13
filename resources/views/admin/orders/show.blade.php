@@ -11,7 +11,13 @@
                     <h2 class="text-lg font-medium text-gray-900">
                         Encomenda #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
                     </h2>
-                    <p class="mt-1 text-sm text-gray-600">Submetida em {{ $order->created_at->format('d/m/Y H:i') }}</p>
+                    <p class="mt-1 text-sm text-gray-600">Submetida em
+                        @if($order->created_at)
+                            {{ $order->created_at->format('d/m/Y H:i') }}
+                        @else
+                            {{ \Carbon\Carbon::parse($order->date)->format('d/m/Y') }}
+                        @endif
+                    </p>
                 </div>
                 <a href="{{ route('admin.orders.index') }}"
                     class="px-4 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors shadow-sm font-medium">
