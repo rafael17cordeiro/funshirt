@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\DB;
 //para os pdfs
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderReceiptMail;
 class CheckoutController extends Controller
 {
     public function index()
@@ -19,7 +20,7 @@ class CheckoutController extends Controller
             // Mantém o admin na página onde estava e avisa-o do bloqueio
             return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
         }
-    
+
         $cart = session()->get('cart', []);
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'O seu carrinho está vazio.');
@@ -43,7 +44,7 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-       if (auth()->user() && auth()->user()->user_type === 'A') {
+        if (auth()->user() && auth()->user()->user_type === 'A') {
             // Mantém o admin na página onde estava e avisa-o do bloqueio
             return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
         }
@@ -69,15 +70,15 @@ class CheckoutController extends Controller
 
         try {
             $formatedPaymentType = match ($request->payment_type) {
-                'VISA'   => 'Visa',
-                'MBWAY'  => 'MB WAY', 
+                'VISA' => 'Visa',
+                'MBWAY' => 'MB WAY',
                 'PAYPAL' => 'PayPal',
             };
 
             $response = Http::withoutVerifying()->timeout(3)->post('https://ainet-payments-api.vercel.app/api/payments', [
                 'type' => $formatedPaymentType,
                 'reference' => $request->payment_ref,
-                'value' => (float)$total,
+                'value' => (float) $total,
             ]);
 
             if ($response->status() === 422) {
@@ -93,43 +94,43 @@ class CheckoutController extends Controller
             return back()->withInput()->with('error', 'Falha de comunicação com o banco simulado.');
         }
 
-         // 3. Gravação na Base de Dados com Transação Segura
+        // 3. Gravação na Base de Dados com Transação Segura
         DB::beginTransaction();
-        try {  
+        try {
             // Criar Encomenda na tabela 'orders'
             $orderId = DB::table('orders')->insertGetId([
-                'customer_id'  => auth()->user()->id,
-                'status'       => 'pending', 
-                'date'         => now()->toDateString(),
-                'total_price'  => $total,
-                'notes'        => $request->notes,
-                'nif'          => $request->nif,
-                'address'      => $request->address,
+                'customer_id' => auth()->user()->id,
+                'status' => 'pending',
+                'date' => now()->toDateString(),
+                'total_price' => $total,
+                'notes' => $request->notes,
+                'nif' => $request->nif,
+                'address' => $request->address,
                 'payment_type' => $formatedPaymentType,
-                'payment_ref'  => $request->payment_ref,
-                'receipt_url'  => null, 
+                'payment_ref' => $request->payment_ref,
+                'receipt_url' => null,
             ]);
 
-           // Inserir os Itens da Encomenda (order_items)
+            // Inserir os Itens da Encomenda (order_items)
             foreach ($cart as $item) {
-                $codigoCor = strtolower($item['color_code']); 
+                $codigoCor = strtolower($item['color_code']);
 
                 // TRUQUE DE SEGURANÇA: Se o código for '000000' ou 'ffffff' e não existir na BD,
                 // associamos a primeira cor disponível no teu banco para evitar que o SQLite mande o erro de Foreign Key.
                 $corExiste = DB::table('colors')->where('code', $codigoCor)->exists();
                 if (!$corExiste) {
                     $primeiraCorDisponivel = DB::table('colors')->value('code');
-                    $codigoCor = $primeiraCorDisponivel ?? $codigoCor; 
+                    $codigoCor = $primeiraCorDisponivel ?? $codigoCor;
                 }
 
                 DB::table('order_items')->insert([
-                    'order_id'        => $orderId,
+                    'order_id' => $orderId,
                     'tshirt_image_id' => $item['tshirt_image_id'] ?? null,
-                    'color_code'      => $codigoCor,
-                    'size'            => $item['size'],
-                    'qty'             => $item['quantity'],
-                    'unit_price'      => $item['unit_price'],
-                    'sub_total'       => $item['unit_price'] * $item['quantity'],
+                    'color_code' => $codigoCor,
+                    'size' => $item['size'],
+                    'qty' => $item['quantity'],
+                    'unit_price' => $item['unit_price'],
+                    'sub_total' => $item['unit_price'] * $item['quantity'],
                 ]);
             }
 
@@ -141,7 +142,7 @@ class CheckoutController extends Controller
 
             // Carrega a view que me enviaste (receipt.blade.php)
             $pdf = Pdf::loadView('order.receipt', ['order' => $orderObject]);
-            
+
             Storage::disk('local')->put('pdf_receipts/' . $filename, $pdf->output());
 
             // Atualiza o nome do PDF na tabela de encomendas
@@ -151,6 +152,8 @@ class CheckoutController extends Controller
 
             // Confirma tudo no banco de dados
             DB::commit();
+
+            Mail::to(auth()->user()->email)->send(new OrderReceiptMail($orderObject, $filename));
 
             // Limpar o Carrinho da Sessão
             session()->forget('cart');
