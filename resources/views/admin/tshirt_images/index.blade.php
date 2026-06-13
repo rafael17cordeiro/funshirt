@@ -6,14 +6,25 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="flex justify-between items-center mb-6">
+            <div class="flex justify-between items-end mb-6">
                 <div>
-                    <h2 class="text-lg font-medium text-gray-900">Catálogo de Estampas</h2>
-                    <p class="mt-1 text-sm text-gray-600">Gestão de imagens disponíveis para os clientes estamparem.</p>
+                    <h2 class="text-2xl font-black text-gray-900 tracking-tight">
+                        Catálogo de Estampas
+                    </h2>
+                    <p class="text-sm text-gray-500 mt-1 font-medium">
+                        Gestão de imagens disponíveis para os clientes estamparem.
+                    </p>
                 </div>
+
                 <a href="{{ route('admin.tshirt_images.create') }}"
-                    class="px-4 py-2 text-sm text-white bg-black rounded-md hover:bg-gray-800 transition-colors shadow-sm">
-                    + ESTAMPA
+                    class="inline-flex items-center px-5 py-2 text-[11px] font-bold tracking-widest text-white uppercase bg-blue-600/50 border border-blue-600 rounded-full hover:bg-blue-800 hover:text-white transition-colors shadow-sm">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-1" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+
+                    NOVA ESTAMPA
                 </a>
             </div>
 
@@ -26,7 +37,8 @@
                     x-transition:leave="transition ease-in duration-200"
                     x-transition:leave-start="opacity-100 transform translate-x-0"
                     x-transition:leave-end="opacity-0 transform translate-x-8"
-                    class="fixed bottom-6 right-6 bg-white p-4 shadow-xl border border-gray-100 border-l-4 border-l-green-500 flex items-start space-x-4 z-50 w-full max-w-sm">
+                    class="fixed bottom-6 right-6 bg-white p-4 shadow-xl border border-gray-100 border-l-4 border-l-green-500 flex items-start space-x-4 z-50 w-full max-w-sm rounded-lg">
+                    <!-- Adicionei o > aqui -->
 
                     <div class="flex-shrink-0 pt-0.5">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
@@ -51,35 +63,35 @@
                 </div>
             @endif
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                 <div class="text-gray-900 overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200 text-sm">
-                        <thead>
+                        <thead class="bg-gray-50 text-gray-500 font-semibold">
                             <tr>
-                                <th scope="col"
+                                <th class="px-6 py-4 uppercase tracking-wider" scope="col"
                                     class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">
                                     Imagem
                                 </th>
-                                <th scope="col"
+                                <th class="px-6 py-4 uppercase tracking-wider" scope="col"
                                     class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider w-1/3">
                                     Nome / Categoria
                                 </th>
-                                <th scope="col"
+                                <th class="px-6 py-4 uppercase tracking-wider" scope="col"
                                     class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">
                                     Descrição
                                 </th>
-                                <th scope="col"
+                                <th class="px-6 py-4 uppercase tracking-wider" scope="col"
                                     class="px-6 py-4 text-right font-bold text-gray-900 uppercase tracking-wider">
                                     Ações
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="divide-y divide-gray-100">
                             @forelse($images as $image)
-                                <tr class="hover:bg-gray-50 transition duration-150">
+                                <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div
-                                            class="w-16 h-16 rounded-md border border-gray-200 overflow-hidden bg-gray-50 flex items-center justify-center shadow-sm">
+                                            class="w-16 h-16 rounded-xl border border-gray-200 overflow-hidden bg-gray-50 flex items-center justify-center shadow-sm">
                                             @if($image->image_url)
                                                 <img src="{{ asset('storage/tshirt_images/' . $image->image_url) }}"
                                                     alt="{{ $image->name }}" class="w-full h-full object-cover">
@@ -100,7 +112,8 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <div class="flex justify-end items-center space-x-3">
                                             <a href="{{ route('admin.tshirt_images.edit', $image) }}"
-                                                class="text-gray-400 hover:text-gray-900 transition-colors" title="Editar">
+                                                class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                                                title="Editar">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -113,7 +126,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="text-gray-400 hover:text-red-600 transition-colors flex items-center"
+                                                    class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
                                                     title="Apagar">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -127,8 +140,20 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="px-6 py-12 text-center text-gray-500">
-                                        Nenhuma estampa registada no catálogo.
+                                    <td colspan="4" class="px-6 py-12 text-center">
+                                        <div class="flex flex-col items-center justify-center text-gray-500">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-3 text-gray-300"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125V5.625A3.375 3.375 0 0010.125 2.25H6.75A2.25 2.25 0 004.5 4.5v15A2.25 2.25 0 006.75 21.75h10.5A2.25 2.25 0 0019.5 19.5v-5.25z" />
+                                            </svg>
+
+                                            <p class="text-sm font-medium">
+                                                Nenhuma estampa registada no catálogo.
+                                            </p>
+
+                                        </div>
                                     </td>
                                 </tr>
                             @endforelse
