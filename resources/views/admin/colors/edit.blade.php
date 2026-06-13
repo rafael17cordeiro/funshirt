@@ -24,8 +24,14 @@
                     <div>
                         <x-input-label for="code" :value="__('Código da Cor (Não Editável)')" />
                         <div class="mt-1 flex items-center space-x-3">
+                            @php
+                                $bgColor = $color->code;
+                                if (preg_match('/^[a-fA-F0-9]{3,6}$/', $bgColor)) {
+                                    $bgColor = '#' . $bgColor;
+                                }
+                            @endphp
                             <div class="w-10 h-10 rounded-full border border-gray-300 shadow-sm flex-shrink-0" 
-                                 style="background-color: {{ $color->code }}"></div>
+                                 style="background-color: {{ $bgColor }}"></div>
                             <x-text-input id="code" type="text" class="block w-full bg-gray-100 text-gray-500 cursor-not-allowed" 
                                           :value="$color->code" readonly />
                         </div>

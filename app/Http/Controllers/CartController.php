@@ -60,21 +60,37 @@ class CartController extends Controller
 
     public function index()
     {
-       if (auth()->user() && auth()->user()->user_type === 'A') {
-            // Mantém o admin na página onde estava e avisa-o do bloqueio
-            return back()->with('error', 'Os administradores não podem realizar compras ou aceder ao carrinho.');
+        if (auth()->user() && auth()->user()->user_type === 'A') {
+            return back()->with('error', 'Os administradores não podem realizar compras.');
         }
 
         $cart = session()->get('cart', []);
+        $priceConfig = Price::first();
         $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['unit_price'] * $item['quantity'];
-        }
 
-        // Busca todas as cores da base de dados
-        $colors = \App\Models\Color::all(); 
+        $cart = session()->get('cart', []);
+    $priceConfig = Price::first();
+    $subtotal = 0;
 
-        return view('cart.index', compact('cart', 'total', 'colors'));
+    // Calcular subtotal normal (sem descontos por item)
+    foreach ($cart as $item) {
+        $subtotal += $item['unit_price'] * $item['quantity'];
+    }
+
+    // Lógica do Desconto Global: 
+    // Se a quantidade total de itens no carrinho for >= qty_discount, aplica desconto
+    $totalQty = array_sum(array_column($cart, 'quantity'));
+    $totalFinal = $subtotal;
+    $descontoAplicado = 0;
+
+    if ($totalQty >= $priceConfig->qty_discount) {
+        // Exemplo: desconta a diferença entre o preço normal e o de desconto
+        $descontoAplicado = ($priceConfig->unit_price_catalog - $priceConfig->unit_price_catalog_discount) * $totalQty;
+        $totalFinal = $subtotal - $descontoAplicado;
+    }
+
+    $colors = \App\Models\Color::all();
+    return view('cart.index', compact('cart', 'subtotal', 'totalFinal', 'descontoAplicado', 'colors'));
     }
 
     public function destroy($key)
@@ -125,7 +141,7 @@ class CartController extends Controller
             $itemData['quantity'] = $request->quantity;
             $itemData['size'] = $request->size;
             $itemData['color_code'] = strtolower($request->color_code);
-            
+
             unset($cart[$key]);
             $cart[$newKey] = $itemData;
         } else {
