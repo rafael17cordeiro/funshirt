@@ -78,11 +78,14 @@
                             placeholder="Ex: 4000 1234 5678 9010">
                     </div>
 
-                    <form action="{{ route('checkout.store') }}" method="POST" x-data="{ submetendo: false }" @submit="submetendo = true">
+                    <form action="{{ route('checkout.store') }}" method="POST" x-data="{ submetendo: false }" @submit="setTimeout(() => submetendo = true, 10)">
                         @csrf
-                        <button type="submit" ::disabled="submetendo" class="w-full bg-black text-white p-3 uppercase font-bold text-sm tracking-wider hover:bg-gray-800 transition disabled:opacity-50">
-                            <span x-show="!submetendo">Finalizar Pagamento *</span>
-                            <span x-show="submetendo">A processar pagamento...</span>
+                        <button type="submit" 
+                                :disabled="submetendo" 
+                                class="w-full bg-black text-white p-3 uppercase font-bold text-sm tracking-wider hover:bg-gray-600 transition disabled:opacity-50">
+                            
+                            <span x-show="!submetendo">Finalizar Pagamento</span>
+                            <span x-show="submetendo" style="display: none;">A processar pagamento...</span>
                         </button>
                     </form>
                 </form>

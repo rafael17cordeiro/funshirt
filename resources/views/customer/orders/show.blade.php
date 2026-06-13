@@ -1,37 +1,38 @@
 <x-app-layout>
+                
+    <div class="flex space-x-3">
+        <a href="{{ route('customer.orders.index') }}" class="text-sm bg-white hover:bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded transition shadow-sm">
+            ← Voltar ao Histórico
+        </a>
+    </div>
+
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Detalhes da Encomenda #' . str_pad($order->id, 5, '0', STR_PAD_LEFT)) }}
             </h2>
-            
-            <div class="flex items-center space-x-3">
-                <a href="{{ route('customer.orders.index') }}" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded transition shadow-sm">
-                    ← Voltar ao Histórico
-                </a>
-            </div>
 
         </div>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-4" >
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 
                 <div class="border-b border-gray-200 pb-4 mb-6 sm:flex sm:justify-between sm:items-center">
                     <div>
-                        <p class="text-sm text-gray-600">Submetida em: <span class="font-semibold text-gray-900">{{ date('d/m/Y', strtotime($order->created_at)) }} às {{ date('H:i', strtotime($order->created_at)) }}</span></p>
-                        <p class="text-sm text-gray-600 mt-1">Método de Pagamento: <span class="font-semibold text-gray-900 uppercase">{{ $order->payment_type }}</span></p>
+                        <p class="text-sm text-gray-600">Submetida em: <span class="font-semibold text-gray-900">
+                            {{ date('d/m/Y', strtotime($order->created_at)) }}</span></p>
+                        <p class="text-sm text-gray-600 mt-1">Método de Pagamento: <span class="font-semibold text-gray-900 uppercase">
+                            {{ $order->payment_type }}</span></p>
                     </div>
                     <div class="mt-2 sm:mt-0">
                         @if($order->status == 'pending')
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-100 text-yellow-800">Pendente</span>
-                        @elseif($order->status == 'paid')
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800">Em Processamento</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-100 text-yellow-800">Enviada</span>
                         @elseif($order->status == 'closed')
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800">Enviada</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800">Entregue</span>
                         @elseif($order->status == 'canceled')
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800">Anulada</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800">Cancelada</span>
                         @else
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-800">{{ ucfirst($order->status) }}</span>
                         @endif
@@ -75,7 +76,7 @@
                     <div class="flex items-center space-x-3">
                         @if(!empty($order->receipt_url))
                             <a href="{{ route('customer.orders.receipt', $order->id) }}" 
-                            class="inline-flex items-center text-sm bg-gray-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition shadow-sm">
+                            class="inline-flex items-center text-sm bg-gray-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition shadow-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                 </svg>

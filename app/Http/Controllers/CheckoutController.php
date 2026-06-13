@@ -72,7 +72,6 @@ class CheckoutController extends Controller
                 'VISA'   => 'Visa',
                 'MBWAY'  => 'MB WAY', 
                 'PAYPAL' => 'PayPal',
-                default => 'Visa'
             };
 
             $response = Http::withoutVerifying()->timeout(3)->post('https://ainet-payments-api.vercel.app/api/payments', [
@@ -158,7 +157,7 @@ class CheckoutController extends Controller
 
             return redirect()->route('catalog.index')
                 ->with('payment_success', 'A tua encomenda foi registada com sucesso! O recibo foi gerado.')
-                ->with('new_order_id', $orderId); // <-- ADICIONAR ESTA LINHAuccess', 'A tua encomenda foi registada com sucesso! O recibo foi gerado.');
+                ->with('new_order_id', $orderId); 
 
         } catch (\Exception $e) {
             DB::rollBack();
