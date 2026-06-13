@@ -3,7 +3,7 @@
         {{ __('As Minhas Encomendas') }}
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             <div class="flex justify-between items-center mb-6">
@@ -20,9 +20,9 @@
                             <tr class="bg-gray-50/50">
                                 <th scope="col" class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Nº Encomenda</th>
                                 <th scope="col" class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Data</th>
-                                <th scope="col" class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Estado</th>
+                                <th scope="col" class="px-8 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Estado</th>
                                 <th scope="col" class="px-6 py-4 text-left font-bold text-gray-900 uppercase tracking-wider">Total</th>
-                                <th scope="col" class="px-6 py-4 text-right font-bold text-gray-900 uppercase tracking-wider">Ações</th>
+                                <th scope="col" class="px-10 py-4 text-right font-bold text-gray-900 uppercase tracking-wider">Ações</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -32,9 +32,9 @@
                                         #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
                                     </td>
                                     
-                                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">
+                                    <td class="px-4 py-4 whitespace-nowrap text-gray-600">
                                         @if(!empty($order->created_at))
-                                            {{ date('d/m/Y', strtotime($order->created_at)) }} às {{ date('H:i', strtotime($order->created_at)) }}
+                                            {{ date('d/m/Y', strtotime($order->created_at)) }}
                                         @else
                                             Data indisponível
                                         @endif
@@ -42,15 +42,13 @@
 
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($order->status == 'pending')
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pendente</span>
-                                        @elseif($order->status == 'paid')
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Em Processamento</span>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-100 text-yellow-800">Enviada</span>
                                         @elseif($order->status == 'closed')
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Enviada</span>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800">Entregue</span>
                                         @elseif($order->status == 'canceled')
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Anulada</span>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800">Cancelada</span>
                                         @else
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">{{ ucfirst($order->status) }}</span>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-800">{{ ucfirst($order->status) }}</span>
                                         @endif
                                     </td>
 

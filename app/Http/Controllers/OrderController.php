@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -54,5 +55,29 @@ class OrderController extends Controller
             ->get();
 
         return view('customer.orders.show', compact('order', 'items'));
+    }
+
+    
+    public function downloadReceipt($id)
+    {
+        // Garante que a encomenda pertence de facto ao cliente logado
+        $order = DB::table('orders')
+            ->where('id', $id)
+            ->where('customer_id', auth()->user()->id)
+            ->first();
+
+        if (!$order || !$order->receipt_url) {
+            return back()->with('error', 'O recibo digital ainda não está disponível para esta encomenda.');
+        }
+
+        $filePath = 'pdf_receipts/' . $order->receipt_url;
+
+        if (!Storage::disk('local')->exists($filePath)) {
+            return back()->with('error', 'O ficheiro do recibo não foi localizado no servidor.');
+        }
+
+        return Storage::disk('local')->download($filePath, $order->receipt_url, [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 }
