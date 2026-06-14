@@ -233,17 +233,15 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - [ ] Aplicar a lógica de preço diferenciado (`unit_price_own`) para t-shirts que utilizem estas imagens privadas.
 
 #### G6. Recibos e E-mails
-- [ ] **Geração de PDF:** Criar automaticamente o recibo em PDF estruturado (armazenado na pasta privada) assim que o estado passa para `closed`.
+- [x] **Geração de PDF:** Criar automaticamente o recibo em PDF estruturado (armazenado na pasta privada) assim que o estado passa para `closed`.
 - [x] **Notificações por E-mail (Mailtrap):**
-- [ ] Envio de e-mail ao criar encomenda (`pending`).
-- [ ] Envio de e-mail ao anular encomenda (`canceled`).
-- [ ] Envio de e-mail ao expedir encomenda (`closed`) com o recibo PDF em anexo.
+
 
 #### G7. Preview de T-shirts (Opcional/Extra)
 - [ ] Implementar a sobreposição visual (via CSS ou biblioteca PHP) da imagem da estampagem por cima da t-shirt base da cor selecionada no carrinho, detalhes ou PDF.
 
 #### G8. Estatísticas
-- [ ] **Painel do Admin:** Desenvolver um dashboard gráfico/métrico com os indicadores de desempenho do negócio (volume de vendas, médias temporais, produtos mais vendidos, etc.).
+- [x] **Painel do Admin:** Desenvolver um dashboard gráfico/métrico com os indicadores de desempenho do negócio
 
 <br><br>
 
