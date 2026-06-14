@@ -215,16 +215,16 @@ Abaixo encontra-se o mapeamento das funcionalidades implementadas e dos requisit
 - [x] **Backoffice do Admin:** Painel de configuração de preços da loja (preço catálogo, preço personalizada, descontos e limiar de quantidade na tabela `prices`).
 
 #### G3. Carrinho de Compras (Ajustes Finais)
-- [ ] Funcionalidade de alterar características (cor, tamanho e quantidade) diretamente na página do carrinho.
-- [ ] Botão de limpeza total do carrinho numa única operação.
-- [ ] Mecanismo para remover automaticamente o item caso a quantidade seja reduzida para zero (0).
+- [x] Funcionalidade de alterar características (cor, tamanho e quantidade) diretamente na página do carrinho.
+- [x] Botão de limpeza total do carrinho numa única operação.
+- [x] Mecanismo para remover automaticamente o item caso a quantidade seja reduzida para zero (0).
 
 #### G4. Encomendas e Checkout
-- [ ] **Processo de Checkout:** Exclusivo para clientes autenticados (redirecionar anónimos mantendo o carrinho).
-- [ ] **Formulário de Checkout:** Campos de NIF (9 dígitos), endereço, método e referência de pagamento pré-preenchidos com os dados do perfil, mas editáveis.
-- [ ] **Integração de Pagamento:** Consumir a API externa simulada (`https://ainet-payments-api.vercel.app`) usando o *Laravel HTTP Client* para validar Visa, PayPal ou MB WAY.
-- [ ] **Registo na BD:** Gravação das tabelas `orders` e `order_items` replicando os preços exatos do momento da compra (imutabilidade do histórico).
-- [ ] **Histórico do Cliente:** Página para o cliente consultar as suas encomendas anteriores e detalhes.
+- [x] **Processo de Checkout:** Exclusivo para clientes autenticados (redirecionar anónimos mantendo o carrinho).
+- [x] **Formulário de Checkout:** Campos de NIF (9 dígitos), endereço, método e referência de pagamento pré-preenchidos com os dados do perfil, mas editáveis.
+- [x] **Integração de Pagamento:** Consumir a API externa simulada (`https://ainet-payments-api.vercel.app`) usando o *Laravel HTTP Client* para validar Visa, PayPal ou MB WAY.
+- [x] **Registo na BD:** Gravação das tabelas `orders` e `order_items` replicando os preços exatos do momento da compra (imutabilidade do histórico).
+- [x] **Histórico do Cliente:** Página para o cliente consultar as suas encomendas anteriores e detalhes.
 - [x] **Logística dos Funcionários:** Tela para funcionários consultarem encomendas `pending` e transitá-las para `closed` pós-envio.
 - [x] **Controlo do Admin:** Permissão para o Admin filtrar qualquer encomenda, alterá-la para `closed` ou `canceled` (com registo opcional do motivo de cancelamento).
 
